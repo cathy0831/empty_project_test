@@ -1,0 +1,9 @@
+zh-TW:
+  application:
+    need_login: "重新登入"
+    no_permission: "無權限使用此功能"
+  session:
+    create:
+      success: "登入成功"
+    destroy:
+      success: "登出成功"

@@ -1,0 +1,17 @@
+notifier: &notifier
+  address: <%= Rails.application.credentials[:SMTP_DOMAIN] %>
+  domain: <%= Rails.application.credentials[:SMTP_DOMAIN] %>
+  user_name: <%= Rails.application.credentials[:SMTP_USER] %>
+  password: <%= Rails.application.credentials[:SMTP_PASSWORD] %>
+  port: 587
+  authentication: "plain"
+  enable_starttls_auto: true
+
+development:
+  <<: *notifier
+
+staging:
+  <<: *notifier
+
+production:
+  <<: *notifier

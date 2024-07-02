@@ -1,0 +1,17 @@
+<div class="flex items-stretch justify-between bg-no-green-1 flex-wrap" id="page-header">
+  <h2 class="flex-1 text-2xl font-bold text-no-green-7 pl-2 sm:text-xl">
+    <div class="flex items-center gap-2">
+      <%= link_to root_path, class: "flex items-center" do %>
+      <span class="inline-block bottom-0 px-2"><%= t("system_name") %></span>
+      <% end %>
+    </div>
+  </h2>
+  <% if current_user.present? %>
+    <div class="flex items-center" @click="isOpenHeader = !isOpenHeader" >
+      <span class="whitespace-nowrap px-4 text-lg font-medium text-gray-800 md:text-base">
+        <%= "#{t('hello')}, " %>
+        <%= current_user.name %>
+      </span>
+    </div>
+  <% end %>
+</div>
