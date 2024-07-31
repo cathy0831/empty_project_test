@@ -22,8 +22,8 @@
     <div class="w-full max-w-[33rem] border rounded-md border-gray-200 pt-[3.5rem] pb-[4rem] px-[2.5rem] bg-white shadow-md">
       <%= form_tag login_path, class: "", id: "login", "v-on:submit.stop.prevent": "onLogin($event)", local: false, data: { turbo: false } do |f| %>
       <div>
-        <h2 class="flex justify-center items-center gap-3 text-center font-sans text-3xl font-extrabold text-no-green-6 mb-[1.2rem]">
-          <img src="<%= vite_asset_path("images/no_logo_2.png") %>" style="height: 5rem; padding-bottom: 0.7rem;">
+        <h2 class="flex justify-center items-center gap-3 text-center font-sans text-3xl font-extrabold text-blue-900 mb-[1.2rem]">
+          <!--<img src="<%#= vite_asset_path("images/no_logo_2.png") %>" style="height: 5rem; padding-bottom: 0.7rem;">-->
           <span><%= t("system_name") %></span>
         </h2>
       </div>
@@ -54,7 +54,7 @@
         </div>
         <input name="redirect_path" class="hidden" value="<%= params[:redirect_path] %>">
         <div class="flex items-center justify-between">
-          <button type="submit" class="p-3 w-full bg-no-orange-4 text-white rounded font-bold">
+          <button type="submit" class="p-3 w-full bg-blue-500 text-white rounded font-bold">
             登入
           </button>
         </div>

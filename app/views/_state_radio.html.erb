@@ -1,0 +1,10 @@
+<div class="flex gap-3">
+  <% %w[enable disable].each do |state_name| %>
+    <div>
+      <%= label_tag t("state.#{state_name.to_sym}") do %>
+      <%= radio_button_tag(:state, state_name, (state == state_name), class: "w3-radio", disabled:) %>
+      <%= t("state.#{state_name}") %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

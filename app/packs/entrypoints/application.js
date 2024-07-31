@@ -1,28 +1,66 @@
-// To see this message, add the following to the `<head>` section in your
-// views/layouts/application.html.erb
-//
-//    <%= vite_client_tag %>
-//    <%= vite_javascript_tag 'application' %>
-console.log('Vite ⚡️ Rails')
+import jquery from 'jquery'
 
-// If using a TypeScript entrypoint file:
-//     <%= vite_typescript_tag 'application' %>
-//
-// If you want to use .jsx or .tsx, add the extension:
-//     <%= vite_javascript_tag 'application.jsx' %>
+window.jQuery = jquery
+window.$ = jquery
 
-console.log('Visit the guide for more information: ', 'https://vite-ruby.netlify.app/guide/rails')
+import * as Turbo from '@hotwired/turbo'
+/* Turbo 千千萬萬絕對不要刪，會爆掉 */
+import Vue from 'vue/dist/vue.esm.js'
+import 'tablesorter'
 
-// Example: Load Rails libraries in Vite.
-//
-// import * as Turbo from '@hotwired/turbo'
-// Turbo.start()
-//
-// import ActiveStorage from '@rails/activestorage'
-// ActiveStorage.start()
-//
-// // Import all channels.
-// const channels = import.meta.globEager('./**/*_channel.js')
+import vueswal from '@/src/vueComponent/vueSwal.vue'
+import { Select, AutoComplete } from 'ant-design-vue'
+import I18n from 'i18n-js'
 
-// Example: Import a stylesheet in app/frontend/index.css
-// import '~/index.css'
+I18n.locale = i18n_locale
+I18n.translations = i18n_translations
+window.I18n = I18n
+
+Vue.use(Select)
+Vue.use(AutoComplete)
+$(document).on('turbo:load turbo:render', (turboParams) => {
+  if (document.getElementById('notice')) {
+    new Vue({
+      el: document.getElementById('notice'),
+      components: {
+        vueswal
+      },
+      mounted: function () {
+        $.ajaxSetup({
+          headers: {
+            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+          }
+        })
+      }
+    })
+  }
+  if (turboParams.type === 'turbo:load') {
+    if (document.getElementById('page-header')) {
+      new Vue({
+        el: document.getElementById('page-header'),
+        data() {
+          return {
+            isOpen: false
+          }
+        },
+        methods: {
+          toggleLogoutButton() {
+            this.isOpen = !this.isOpen
+          }
+        }
+      })
+    }
+
+    const $tablesorter = $('.tablesorter')
+    $tablesorter.tablesorter({
+      duplicateSpan: true,
+
+      widthFixed: true,
+      widgets: ['filter'],
+      widgetOptions: {
+        filter_external: 'input.search',
+        filter_reset: '.reset'
+      }
+    })
+  }
+})

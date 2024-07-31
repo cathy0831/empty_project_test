@@ -14,15 +14,14 @@
 <div class="container mx-auto flex justify-center">
   <div class="max-w-[768px] px-4">
     <div>
-      <div class="session-title"></div>
       <div class=" flex item-center gap-3 flex-wrap">
         <% modules.each do |item| %>
           <% if item[:perm] %>
             <a 
             class="session-button" 
             href="<%= item[:link] %>">
-              <i class="<%= item[:icon] %> session-icon"></i>
-              <p class="mt-1 session-button-text"><%= item[:name] %></p>
+              <i class="<%= item[:icon] %> text-[4rem]"></i>
+              <p class="mt-1 whitespace-nowrap text-2xl"><%= item[:name] %></p>
             </a>
           <% end %>
         <% end %>

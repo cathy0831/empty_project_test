@@ -1,0 +1,222 @@
+[v-cloak] {
+  display: none;
+}
+
+h3 {
+  @apply text-2xl;
+}
+
+h4 {
+  @apply text-xl;
+}
+
+/* antd default */
+a {
+  text-decoration: unset !important;
+
+  &:active {
+    color: unset
+  }
+
+  &:hover {
+    color: unset
+  }
+}
+
+/* antd default */
+
+/* w3 default*/
+.w3-radio {
+  width: 24px !important;
+  height: 24px !important;
+}
+
+.w3-check {
+  width: 24px !important;
+  height: 24px !important;
+}
+
+/* w3 default*/
+
+/* table */
+table {
+  height: fit-content;
+  position: relative;
+
+  thead {
+    tr:first-of-type {
+      position: sticky;
+      top: -1px;
+      z-index: 10;
+    }
+  }
+
+  td {
+    word-break: break-all;
+    vertical-align: middle !important;
+  }
+}
+
+.w3-hoverable tbody tr:hover,
+.w3-ul.w3-hoverable li:hover {
+  @apply bg-blue-100;
+}
+
+.table-sorter-icon {
+  display: flex;
+  align-self: center;
+
+  &.icon-sort-down {
+    margin-bottom: 5px;
+  }
+}
+
+.overflow-container {
+  @apply w-full overflow-auto overflow-x-auto overflow-y-auto rounded border p-2;
+}
+
+/* table */
+
+/* input */
+input,
+select {
+  @apply border-gray-300;
+
+  &:disabled {
+    background-color: #eeeeee;
+  }
+}
+
+.w3-input {
+  @apply rounded-none;
+}
+
+.custom-input {
+  @apply w-full bg-white border border-gray-300 rounded-md shadow-sm px-2 py-3 text-left cursor-default focus:outline-none focus:ring-1 sm:text-sm;
+}
+/* input */
+
+
+/* button */
+@mixin base-button {
+  @apply py-2 px-3 inline-block border rounded overflow-hidden cursor-pointer;
+}
+.custom-base-button {
+  @include base-button;
+}
+
+.custom-submit-button {
+  @include base-button;
+  @apply cursor-pointer bg-teal-600 border-teal-600 text-white hover:bg-teal-500 disabled:bg-white disabled:border-gray-400 disabled:text-gray-400 disabled:cursor-not-allowed;
+}
+
+.custom-back-button {
+  @include base-button;
+  @apply inline py-3 cursor-pointer border-0 bg-white text-gray-800 hover:bg-gray-100;
+}
+
+.custom-edit-button {
+  @include base-button;
+  @apply bg-blue-500 border-blue-500 text-white hover:bg-blue-500 hover:text-white whitespace-nowrap;
+}
+
+.custom-create-button {
+  @include base-button;
+  @apply bg-white border-blue-900 text-blue-900 hover:text-blue-900 hover:bg-gray-50;
+}
+
+.custom-reset-button {
+  @include base-button;
+  @apply border-red-400 bg-white text-red-400 hover:bg-red-400 hover:text-white;
+}
+
+.custom-remove-button {
+  @include base-button;
+  @apply cursor-pointer whitespace-nowrap border-red-400 bg-red-400 text-white hover:bg-red-500;
+}
+
+.custom-add-button {
+  @include base-button;
+  @apply cursor-pointer bg-blue-500 hover:bg-blue-600 border-blue-500 text-white;
+}
+
+.custom-button-bar {
+  @apply w-full flex gap-x-2 justify-end pt-10 pb-4 px-4;
+}
+
+/* button */
+
+/* navbar */
+.custom-navbar-passive {
+  @apply p-2 border-gray-700 text-gray-700;
+}
+
+.custom-navbar-active {
+  @apply p-2 border rounded-t-md border-orange-800 border-b-white border-b-2 text-orange-800 font-extrabold hover:text-orange-800;
+}
+
+.custom-navbar-border-color {
+  @apply border-orange-800;
+}
+
+/* navbar */
+
+/* sweetAlert */
+.vue-swal-custom-class {
+  .swal2-confirm {
+    @apply bg-blue-500;
+  }
+}
+
+.swal2-container.customSwal {
+  button.swal2-confirm {
+    @apply bg-blue-500;
+  }
+
+  &.simpleLoading {
+    cursor: wait;
+  }
+
+  .swal2-loading {
+    background: transparent;
+  }
+
+  .swal2-loader {
+    border-width: .4em;
+    width: 5em;
+    height: 5em;
+    border-color: #cfebd8da #0000;
+    animation: swal-simpleLoading 1s ease-in-out infinite;
+    opacity: .5;
+
+    @keyframes swal-simpleLoading {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  }
+}
+
+div:where(.swal2-container) button:where(.swal2-close):hover {
+  @apply text-gray-600;
+
+  &:hover {
+    @apply text-gray-600;
+  }
+
+  &:focus {
+    box-shadow: unset;
+  }
+}
+
+/* sweetAlert */
+
+/* session */
+.session-button {
+  @apply border-2 bg-gray-200 border-gray-300 font-bold text-blue-600 py-4 px-8 m-4 text-center rounded-lg hover:bg-gray-300 hover:text-blue-600;
+}
+/* session */

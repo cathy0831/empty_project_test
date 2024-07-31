@@ -10,8 +10,11 @@ export default defineConfig({
       jQuery: 'jquery',
     }),
     RubyPlugin(),
-    vue()
+    vue(),
   ],
+  optimizeDeps: {
+    include: ["@ant-design/icons-vue"],
+  },
   build: {
     commonjsOptions: { transformMixedEsModules: true }
   },

@@ -1,0 +1,52 @@
+@mixin base-page {
+  outline: 1px solid #dddddd;
+  border-radius: 3px;
+  padding: 8px 10px;
+}
+
+@mixin base-page-hover {
+  border: none;
+  color: white;
+  @apply bg-blue-900;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  text-align: center;
+  padding: 0.3rem;
+  cursor: default;
+  margin-top: 10px;
+  
+  span.page.active {
+    @include base-page;
+  }
+  span.page.next, span.page {
+    padding: 8px 0;
+    height: 38.5px;
+    a {
+      @include base-page;
+      @apply text-blue-900;
+      padding: 10px 10px;
+      text-decoration: none;
+      &:hover,
+      &:focus {
+        @include base-page-hover;
+      }
+    }
+  }
+  span.page.disabled {
+    @include base-page;
+    color: #aaaaaa;
+  }
+  .active {
+    font-style: normal;
+    font-weight: bold;
+    color: #e28f48;
+  }
+  .page_info {
+    color: #aaaaaa;
+    padding-top: 0.8rem;
+  }
+}

@@ -1,0 +1,74 @@
+/*@import "mixin";*/
+.tablesorter .header,
+.tablesorter .tablesorter-header {
+  background-image: url("https://i.imgur.com/0z85T4m.png");
+  background-size: 12px;
+  background-repeat: no-repeat;
+  background-position: center right 5px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.tablesorter tr[role="search"] {
+  position: sticky;
+  top: 38px;
+  z-index: 10;
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+}
+
+.tablesorter-header-inner {
+  margin-right: 10px;
+}
+
+.filter-false {
+  .tablesorter-header-inner {
+    margin-right: 0;
+  }
+}
+
+.tablesorter .headerSortUp,
+.tablesorter .tablesorter-headerSortUp,
+.tablesorter .tablesorter-headerAsc {
+  background-image: url("https://i.imgur.com/0R4ZAbS.png");
+  background-size: 12px;
+}
+
+.tablesorter .headerSortDown,
+.tablesorter .tablesorter-headerSortDown,
+.tablesorter .tablesorter-headerDesc {
+  background-image: url("https://i.imgur.com/iD7vKi9.png");
+  background-size: 12px;
+}
+
+.tablesorter .tablesorter-filter {
+  padding: 0 0.25rem;
+  width: 100%;
+  line-height: 1.428571429;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  outline-offset: unset;
+}
+
+/* rows hidden by filtering (needed for child rows) */
+.tablesorter .filtered {
+  display: none !important;
+}
+
+/* ajax error row */
+.tablesorter .tablesorter-errorRow td {
+  text-align: center;
+  cursor: pointer;
+  background-color: #e6bf99;
+}
+
+/* hide disabled filter inputs */
+.tablesorter-filter.disabled {
+  display: none;
+}
+
+/* hide sorter-false background-image */
+.tablesorter .tablesorter-headerRow .sorter-false {
+  cursor: default;
+  background-image: none;
+}

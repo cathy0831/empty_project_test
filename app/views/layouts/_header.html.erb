@@ -1,23 +1,23 @@
-<div class="flex items-stretch justify-between bg-no-green-1 flex-wrap" id="page-header">
-  <h2 class="flex-1 text-2xl font-bold text-no-green-7 pl-2 sm:text-xl">
+<div class="flex items-stretch justify-between bg-blue-200 flex-wrap" id="page-header">
+  <h2 class="flex-1 text-2xl font-bold text-blue-900 pl-2 sm:text-xl">
     <div class="flex items-center gap-2">
-      <%= link_to root_path, class: "flex items-center" do %>
+      <%= link_to root_path, class: "flex items-center no-underline gap-x-2" do %>
+      <!--<img src="<%= vite_asset_path("images/longsun_logo.png") %>" alt="榮昇科技" class="h-[2.5rem] py-2 sm:h-14">-->
       <span class="inline-block bottom-0 px-2"><%= t("system_name") %></span>
       <% end %>
     </div>
   </h2>
   <% if current_user.present? %>
-    <div class="flex items-center" @click="isOpenHeader = !isOpenHeader" >
+    <div class="flex items-center"  @click="toggleLogoutButton">
       <span class="whitespace-nowrap px-4 text-lg font-medium text-gray-800 md:text-base">
         <%= "#{t('hello')}, " %>
         <%= current_user.name %>
       </span>
     </div>
-    <div class="flex sm:w-full" :class="{ 'sm:hidden': isOpenHeader }">
-        
+    <div class="flex sm:w-full" :class="isOpen ? 'sm:block' : 'sm:hidden'">
       <%= button_to "登出", logout_path, method: "delete",
-        form_class: "flex items-center hover:bg-no-green-5 text-lg leading-5 font-medium text-gray-700 hover:text-white transition duration-150 ease-in-out sm:block sm:w-full sm:border-t md:text-base cusor-pointer", class: "w-full h-full px-4 py-2"
-          %>
-      </div>
+        form_class: "flex items-center hover:bg-blue-400 text-lg leading-5 font-medium text-gray-700 hover:text-white transition duration-150 ease-in-out sm:block sm:w-full sm:border-t md:text-base cusor-pointer", class: "w-full h-full px-4 py-2"
+        %>
+    </div>
   <% end %>
 </div>
