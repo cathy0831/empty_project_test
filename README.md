@@ -10,26 +10,18 @@
 
   現行版本: 
   [v1.0]()
-
-  歷史版本: 
   
   #### 系統開發規格書
   現行版本:
   [v1.0]()
 
-  歷史版本: 
-
   #### 前端測試表單
   現行版本:
   [v1.0]()
-
-  歷史版本: 
   
   #### 使用手冊
 
   現行版本: 
-  
-  歷史版本:  
 
 ### 安裝指南
  
@@ -63,7 +55,6 @@
   DB_PASSWORD: ""
   DB_NAME: ""
   
-
   # SMTP
   SMTP_DOMAIN: ""  
   SMTP_USER: ""  
@@ -88,6 +79,7 @@
   ```
   # credentials/development.key
   TODO
+  daee001b904abd6bb84c21a07ad5b252
   ```
   ##### 常用指令
   * 啟動專案: `$ bundle exec foreman start -f Procfile.dev -p [PORT] `

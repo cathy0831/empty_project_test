@@ -1,0 +1,6 @@
+zh-TW:
+  actor:
+    user: 
+      verify_password_failed: "密碼驗證失敗"
+    authenticate:
+      invalid_user: "登入失敗"

@@ -1,0 +1,7 @@
+zh-TW:
+  enumerize:
+    defaults:
+      state:
+        default: "預設"
+        enable: "啟用"
+        disable: "停用"

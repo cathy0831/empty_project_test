@@ -1,0 +1,6 @@
+zh-TW:
+  activerecord:
+    attributes:
+      user:
+        account: "帳號"
+        password: "密碼"

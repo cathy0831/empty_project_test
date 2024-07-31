@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<head>
+  <title><%= t("system_name") %></title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= render "/layouts/meta" %>
+  <%= vite_client_tag %>
+  <%= vite_stylesheet_tag "application.scss" %>
+  <%= vite_javascript_tag "login" %>
+</head>
+<body 
+  class="bg-gray-100 f-full" 
+  data-controller="<%= controller.controller_path.to_s %>" 
+  data-action="<%= controller.action_name.to_s %>"
+>
+  <div
+    id="login-app"
+    class="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8"
+    style="height: calc(100vh - 30px);"
+  >
+    <%= render "/notice" %>
+    <div class="w-full max-w-[33rem] border rounded-md border-gray-200 pt-[3.5rem] pb-[4rem] px-[2.5rem] bg-white shadow-md">
+      <%= form_tag login_path, class: "", id: "login", "v-on:submit.stop.prevent": "onLogin($event)", local: false, data: { turbo: false } do |f| %>
+      <div>
+        <h2 class="flex justify-center items-center gap-3 text-center font-sans text-3xl font-extrabold text-no-green-6 mb-[1.2rem]">
+          <img src="<%= vite_asset_path("images/no_logo_2.png") %>" style="height: 5rem; padding-bottom: 0.7rem;">
+          <span><%= t("system_name") %></span>
+        </h2>
+      </div>
+      
+      <div class="px-4">
+        <div class="mb-4 w-full">
+          <label for="account" class="block mb-2 text-sm font-bold">
+            員工編號/帳號
+          </label>
+          <%= text_field_tag :account,
+                params[:account], 
+                autofocus: true,
+                class: "w-full p-2 rounded border border-gray-300", 
+                required: "required",
+                ref: "account",
+                autocomplete: false %>
+        </div>
+        <div class="mb-8 w-full">
+          <label for="password" class="block mb-2 text-sm font-bold">
+            密碼
+          </label>
+          <%= password_field_tag :password, 
+                    "",
+                    id: "login_password",
+                    class: "w-full p-2 rounded border border-gray-300", 
+                    required: "required",
+                    autocomplete: false %>
+        </div>
+        <input name="redirect_path" class="hidden" value="<%= params[:redirect_path] %>">
+        <div class="flex items-center justify-between">
+          <button type="submit" class="p-3 w-full bg-no-orange-4 text-white rounded font-bold">
+            登入
+          </button>
+        </div>
+      </div>
+      <% end %>
+    </div>
+  </div>
+  <%= render "layouts/footer" %>
+</body>
+</html>

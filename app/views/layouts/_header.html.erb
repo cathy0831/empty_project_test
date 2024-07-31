@@ -13,5 +13,11 @@
         <%= current_user.name %>
       </span>
     </div>
+    <div class="flex sm:w-full" :class="{ 'sm:hidden': isOpenHeader }">
+        
+      <%= button_to "登出", logout_path, method: "delete",
+        form_class: "flex items-center hover:bg-no-green-5 text-lg leading-5 font-medium text-gray-700 hover:text-white transition duration-150 ease-in-out sm:block sm:w-full sm:border-t md:text-base cusor-pointer", class: "w-full h-full px-4 py-2"
+          %>
+      </div>
   <% end %>
 </div>
