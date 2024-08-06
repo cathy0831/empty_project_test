@@ -15,11 +15,11 @@ a {
   text-decoration: unset !important;
 
   &:active {
-    color: unset
+    color: unset;
   }
 
   &:hover {
-    color: unset
+    color: unset;
   }
 }
 
@@ -71,6 +71,22 @@ table {
   }
 }
 
+@media (max-width: 1022px) {
+  tbody td[data-title]:before {
+    font-size: 1.1em;
+    font-weight: bold;
+
+    display: inline-block;
+    float: left;
+
+    width: 33%;
+
+    content: attr(data-title);
+    text-align: middle;
+    white-space: pre-line;
+  }
+}
+
 .overflow-container {
   @apply w-full overflow-auto overflow-x-auto overflow-y-auto rounded border p-2;
 }
@@ -92,14 +108,13 @@ select {
 }
 
 .custom-input {
-  @apply w-full bg-white border border-gray-300 rounded-md shadow-sm px-2 py-3 text-left cursor-default focus:outline-none focus:ring-1 sm:text-sm;
+  @apply focus:outline-none w-full cursor-default rounded-md border border-gray-300 bg-white px-2 py-3 text-left shadow-sm focus:ring-1 sm:text-sm;
 }
 /* input */
 
-
 /* button */
 @mixin base-button {
-  @apply py-2 px-3 inline-block border rounded overflow-hidden cursor-pointer;
+  @apply inline-block cursor-pointer overflow-hidden rounded border py-2 px-3;
 }
 .custom-base-button {
   @include base-button;
@@ -107,22 +122,22 @@ select {
 
 .custom-submit-button {
   @include base-button;
-  @apply cursor-pointer bg-teal-600 border-teal-600 text-white hover:bg-teal-500 disabled:bg-white disabled:border-gray-400 disabled:text-gray-400 disabled:cursor-not-allowed;
+  @apply bg-teal-600 border-teal-600 hover:bg-teal-500 cursor-pointer text-white disabled:cursor-not-allowed disabled:border-gray-400 disabled:bg-white disabled:text-gray-400;
 }
 
 .custom-back-button {
   @include base-button;
-  @apply inline py-3 cursor-pointer border-0 bg-white text-gray-800 hover:bg-gray-100;
+  @apply inline cursor-pointer border-0 bg-white py-3 text-gray-800 hover:bg-gray-100;
 }
 
 .custom-edit-button {
   @include base-button;
-  @apply bg-blue-500 border-blue-500 text-white hover:bg-blue-500 hover:text-white whitespace-nowrap;
+  @apply whitespace-nowrap border-blue-500 bg-blue-500 text-white hover:bg-blue-500 hover:text-white;
 }
 
 .custom-create-button {
   @include base-button;
-  @apply bg-white border-blue-900 text-blue-900 hover:text-blue-900 hover:bg-gray-50;
+  @apply border-blue-900 bg-white text-blue-900 hover:bg-gray-50 hover:text-blue-900;
 }
 
 .custom-reset-button {
@@ -137,29 +152,14 @@ select {
 
 .custom-add-button {
   @include base-button;
-  @apply cursor-pointer bg-blue-500 hover:bg-blue-600 border-blue-500 text-white;
+  @apply cursor-pointer border-blue-500 bg-blue-500 text-white hover:bg-blue-600;
 }
 
 .custom-button-bar {
-  @apply w-full flex gap-x-2 justify-end pt-10 pb-4 px-4;
+  @apply flex w-full justify-end gap-x-2 px-4 pt-10 pb-4;
 }
 
 /* button */
-
-/* navbar */
-.custom-navbar-passive {
-  @apply p-2 border-gray-700 text-gray-700;
-}
-
-.custom-navbar-active {
-  @apply p-2 border rounded-t-md border-orange-800 border-b-white border-b-2 text-orange-800 font-extrabold hover:text-orange-800;
-}
-
-.custom-navbar-border-color {
-  @apply border-orange-800;
-}
-
-/* navbar */
 
 /* sweetAlert */
 .vue-swal-custom-class {
@@ -182,12 +182,12 @@ select {
   }
 
   .swal2-loader {
-    border-width: .4em;
+    border-width: 0.4em;
     width: 5em;
     height: 5em;
-    border-color: #cfebd8da #0000;
+    border-color: #cfe7ebda #0000;
     animation: swal-simpleLoading 1s ease-in-out infinite;
-    opacity: .5;
+    opacity: 0.5;
 
     @keyframes swal-simpleLoading {
       0% {
@@ -217,6 +217,6 @@ div:where(.swal2-container) button:where(.swal2-close):hover {
 
 /* session */
 .session-button {
-  @apply border-2 bg-gray-200 border-gray-300 font-bold text-blue-600 py-4 px-8 m-4 text-center rounded-lg hover:bg-gray-300 hover:text-blue-600;
+  @apply m-4 rounded-lg border-2 border-gray-300 bg-gray-200 py-4 px-8 text-center font-bold text-blue-600 hover:bg-gray-300 hover:text-blue-600;
 }
 /* session */

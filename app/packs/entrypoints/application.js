@@ -4,7 +4,6 @@ window.jQuery = jquery
 window.$ = jquery
 
 import * as Turbo from '@hotwired/turbo'
-/* Turbo 千千萬萬絕對不要刪，會爆掉 */
 import Vue from 'vue/dist/vue.esm.js'
 import 'tablesorter'
 
