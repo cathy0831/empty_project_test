@@ -215,11 +215,18 @@ export default {
 </script>
 <style lang="scss">
 /* a-select */
+:root {
+  --select-border-color: #cbd5e1;
+  --option-text-color: #595959;
+  --option-background: #dce8f7;
+  --focus-shadow: 0 0 0 1px #70abf3;
+}
+
 .ant-select {
   font-size: 1rem;
   width: 100%;
   .ant-select-selection__placeholder {
-    color: #595959;
+    color: var(--option-text-color);
   }
   .ant-select-selection--single {
     height: auto;
@@ -236,13 +243,14 @@ export default {
     }
   }
   .ant-select-selection {
-    border: 1px solid #cbd5e1;
-    color: #595959;
+    border: 1px solid;
+    border-color: var(--select-border-color);
+    color: var(--option-text-color);
     &:focus {
-      box-shadow: 0 0 0 1px rgb(20 83 45 / 0.5) !important;
+      box-shadow: var(--focus-shadow) !important;
     }
     &:hover {
-      border-color: #cbd5e1;
+      border-color: var(--select-border-color);
     }
   }
 }
@@ -251,11 +259,11 @@ export default {
 .ant-select-focused .ant-select-selection,
 .ant-select-selection:focus,
 .ant-select-selection:active {
-  box-shadow: 0 0 0 1px rgb(20 83 45 / 0.5) !important;
+  box-shadow: var(--focus-shadow) !important;
 }
 
 .ant-select-open .ant-select-selection {
-  box-shadow: 0 0 0 1px rgb(20 83 45 / 0.5) !important;
+  box-shadow: var(--focus-shadow) !important;
 }
 
 /* a-select-option */
@@ -264,12 +272,12 @@ export default {
     font-size: 1rem;
     padding: 0.75rem 0.7rem;
     &:hover:not(.ant-select-dropdown-menu-item-disabled) {
-      background-color: #4a9a4d1c;
+      background-color: var(--option-background);
     }
   }
 
   .ant-select-dropdown-menu-item-active:not(.ant-select-dropdown-menu-item-disabled) {
-    background-color: #4a9a4d1c;
+    background-color: var(--option-background);
   }
 }
 
@@ -278,7 +286,6 @@ export default {
   margin-top: -9px;
   .anticon-close-circle {
     font-size: 1.2rem;
-    // @apply text-gray-500;
   }
 }
 </style>
