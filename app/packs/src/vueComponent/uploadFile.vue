@@ -4,8 +4,13 @@
     <div v-if="isPersisted">
       <p class="mb-4">已上傳 {{ projectFileList.length }} 份檔案:</p>
       <div class="flex flex-col gap-3">
-        <p v-for="(file, index) in projectFileList" class="flex items-center gap-3">
+        <p
+          v-for="(file, index) in projectFileList"
+          :key="`projectFile_${index}`"
+          class="flex items-center gap-3"
+        >
           <button
+            v-if="allowDelProjectFile"
             @click.prevent="deleteProjectFile(file.file_id, index)"
             class="deleteButton"
             style="height: fit-content"
@@ -24,7 +29,11 @@
     <div v-if="uploadFilePreviewList.length > 0">
       <p class="mb-4">{{ reviewText }}:</p>
       <div class="flex flex-col gap-3">
-        <p v-for="(file, index) in uploadFilePreviewList" class="flex items-center gap-3">
+        <p
+          v-for="(file, index) in uploadFilePreviewList"
+          :key="`uploadFile_${index}`"
+          class="flex items-center gap-3"
+        >
           <button
             @click.prevent="deletePreviewFile(index)"
             class="deleteButton"
@@ -76,19 +85,19 @@ export default {
     label: {
       type: String,
       default: () => {
-        return I18n.t('document.upload_file')
+        return '上傳檔案'
       }
     },
     buttonText: {
       type: String,
       default: () => {
-        return I18n.t('document.upload_file_button_text')
+        return '選擇檔案'
       }
     },
     reviewText: {
       type: String,
       default: () => {
-        return I18n.t('document.upload_file_review')
+        return '已選擇的檔案'
       }
     },
     fileId: {
@@ -115,21 +124,34 @@ export default {
         return false
       }
     },
-    projectFileList: {
+    initProjectFileList: {
       type: Array,
       default: () => {
         return []
       }
+    },
+    allowDelProjectFile: {
+      type: Boolean,
+      default: () => {
+        return false
+      }
     }
   },
-  data() {
+  data () {
     return {
+      projectFileList: [],
       uploadFilePreviewList: [],
       deletedFileList: [],
       isPersisted: false
     }
   },
   watch: {
+    initProjectFileList: {
+      handler: function (newVal) {
+        this.projectFileList = [...newVal]
+      },
+      deep: true
+    },
     uploadFilePreviewList: {
       handler: function (newVal) {
         const dataTransfer = new DataTransfer()
@@ -142,17 +164,15 @@ export default {
     }
   },
   computed: {
-    hasLabel() {
+    hasLabel () {
       return !['', null, undefined].includes(this.label)
     },
-    uploadedText() {
-      return I18n.t('document.upload_file_uploaded', {
-        file_num: this.uploadFilePreviewList.length
-      })
+    uploadedText () {
+      return `選擇 ${this.uploadFilePreviewList.length} 個檔案`
     }
   },
   methods: {
-    uploadFile(event) {
+    uploadFile (event) {
       const list = [...event.target.files]
       if (this.multiple) {
         list.forEach((item) => {
@@ -162,13 +182,13 @@ export default {
         this.uploadFilePreviewList = list
       }
     },
-    deletePreviewFile(fileIndex) {
+    deletePreviewFile (fileIndex) {
       this.uploadFilePreviewList = [
         ...this.uploadFilePreviewList.slice(0, fileIndex),
         ...this.uploadFilePreviewList.slice(fileIndex + 1)
       ]
     },
-    deleteProjectFile(id, fileIndex) {
+    deleteProjectFile (id, fileIndex) {
       this.projectFileList = [
         ...this.projectFileList.slice(0, fileIndex),
         ...this.projectFileList.slice(fileIndex + 1)
@@ -176,14 +196,15 @@ export default {
 
       this.deletedFileList.push(id)
     },
-    resetFile() {
+    resetFile () {
       // 為了避免檔案重複選取時，change 因相同內容而事件無法觸發
       // 解法參考: https://stackoverflow.com/questions/12030686/html-input-file-selection-event-not-firing-upon-selecting-the-same-file
       this.$refs.fileInput.value = null
     }
   },
-  mounted() {
-    this.isPersisted = this.projectFileList.length > 0
+  mounted () {
+    this.isPersisted = this.initProjectFileList.length > 0
+    this.projectFileList = [...this.initProjectFileList]
   }
 }
 </script>

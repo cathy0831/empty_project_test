@@ -1,32 +1,32 @@
 import Vue from 'vue'
 
 const customVue = Vue.extend({
-  beforeMount: function() {
-    if (this !== this.$root) return;
+  beforeMount: function () {
+    if (this !== this.$root) return
 
-    this.__TurbolinksAdapterOriginalOuterHTML__ = this.$el.outerHTML;
-    var _this = this;
-    document.addEventListener("turbo:before-cache", function teardown() {
-      _this.$destroy();
-      document.removeEventListener("turbo:before-cache", teardown);
-    });
+    this.__TurbolinksAdapterOriginalOuterHTML__ = this.$el.outerHTML
+    const _this = this
+    document.addEventListener('turbo:before-cache', function teardown () {
+      _this.$destroy()
+      document.removeEventListener('turbo:before-cache', teardown)
+    })
   },
   mounted: function () {
     this.$el.hidden = false
     console.log(this.$el.style)
     // setInterval(() => {
-      // this.$el.style.opacity = 1
+    // this.$el.style.opacity = 1
     // }, 50)
   },
-  destroyed: function() {
-    if (!this.__TurbolinksAdapterOriginalOuterHTML__) return;
+  destroyed: function () {
+    if (!this.__TurbolinksAdapterOriginalOuterHTML__) return
 
-    this.$el.outerHTML = this.__TurbolinksAdapterOriginalOuterHTML__;
-    delete this.__TurbolinksAdapterOriginalOuterHTML__;
+    this.$el.outerHTML = this.__TurbolinksAdapterOriginalOuterHTML__
+    delete this.__TurbolinksAdapterOriginalOuterHTML__
   }
 })
 
-class myVue extends Vue{
+class myVue extends Vue {
   constructor (vueOpt) {
     const $el = vueOpt.el
     if ($el == null) {
@@ -38,6 +38,5 @@ class myVue extends Vue{
     return new customVue(vueOpt)
   }
 }
-
 
 export default myVue

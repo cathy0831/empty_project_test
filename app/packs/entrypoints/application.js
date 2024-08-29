@@ -3,12 +3,12 @@ import jquery from 'jquery'
 window.jQuery = jquery
 window.$ = jquery
 
-import * as Turbo from '@hotwired/turbo'
+import '@hotwired/turbo'
 import Vue from 'vue/dist/vue.esm.js'
 import 'tablesorter'
 
 import vueswal from '@/src/vueComponent/vueSwal.vue'
-import { Select, AutoComplete } from 'ant-design-vue'
+import { Select } from 'ant-design-vue'
 import I18n from 'i18n-js'
 
 I18n.locale = i18n_locale
@@ -16,7 +16,6 @@ I18n.translations = i18n_translations
 window.I18n = I18n
 
 Vue.use(Select)
-Vue.use(AutoComplete)
 $(document).on('turbo:load turbo:render', (turboParams) => {
   if (document.getElementById('notice')) {
     new Vue({

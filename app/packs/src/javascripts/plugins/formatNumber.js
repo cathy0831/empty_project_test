@@ -1,6 +1,6 @@
 const mixinFormatNumber = {
   methods: {
-    formatNumber(number, empty = '') {
+    formatNumber (number, empty = '') {
       if ([null, '', undefined, 'Infinity'].includes(number)) return empty
       return new Intl.NumberFormat('en', {
         minimumSignificantDigits: 1

@@ -1,5 +1,5 @@
 <template>
-  <!--  -->
+  <div></div>
 </template>
 
 <script>
@@ -24,7 +24,7 @@ export default {
     }
   },
   mounted: function () {
-    if (mySwal[this.type] != undefined) {
+    if (mySwal[this.type] !== undefined) {
       mySwal[this.type]({
         icon: this.icon,
         title: this.title,

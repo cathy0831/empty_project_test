@@ -1,7 +1,9 @@
 {
   "all": {
     "sourceCodeDir": "app/packs",
-    "watchAdditionalPaths": ["app/views"]
+    "watchAdditionalPaths": [
+      "app/views"
+    ]
   },
   "development": {
     "autoBuild": true,

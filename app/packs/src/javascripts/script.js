@@ -1,37 +1,37 @@
-function validPhone(data) {
-  var reg = /((?=(09))[0-9]{10})$/
-  var status = reg.test(data)
+function validPhone (data) {
+  const reg = /((?=(09))[0-9]{10})$/
+  const status = reg.test(data)
   return status
 }
 
-function validIP(data) {
-  var reg =
+function validIP (data) {
+  const reg =
     /^(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9])\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9])$/
-  var status = reg.test(data)
+  const status = reg.test(data)
   return status
 }
 /**
  * valiad  email
  */
-function valiadEmail(data) {
-  var reg = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/
-  var status = reg.test(data)
+function valiadEmail (data) {
+  const reg = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/
+  const status = reg.test(data)
   return status
 }
 /**
  * valiad  car index
  */
-function valiadCarIndex(data) {
-  var reg = /^[A-Z0-9]{2,3}\-[0-9]{3,4}$|^[0-9]{3,4}\-[A-Z0-9]{2,3}$/
-  var status = reg.test(data)
+function valiadCarIndex (data) {
+  const reg = /^[A-Z0-9]{2,3}\-[0-9]{3,4}$|^[0-9]{3,4}\-[A-Z0-9]{2,3}$/
+  const status = reg.test(data)
   return status
 }
 
-function hashFnv32a(str, asString, seed) {
-  /*jshint bitwise:false */
-  var i,
-    l,
-    hval = seed === undefined ? 0x811c9dc5 : seed
+function hashFnv32a (str, asString, seed) {
+  /* jshint bitwise:false */
+  let i
+  let l
+  let hval = seed === undefined ? 0x811c9dc5 : seed
 
   for (i = 0, l = str.length; i < l; i++) {
     hval ^= str.charCodeAt(i)
@@ -43,13 +43,13 @@ function hashFnv32a(str, asString, seed) {
   }
   return hval >>> 0
 }
-/* Tab display function*/
-function tabDisplay(default_tab = 0) {
+/* Tab display function */
+function tabDisplay (default_tab = 0) {
   $('ul.tabs li').removeClass('active')
 
   // 預設顯示第一個 Tab
-  var _showTab = default_tab
-  var $defaultLi = $('ul.tabs li').eq(_showTab).addClass('active')
+  const _showTab = default_tab
+  const $defaultLi = $('ul.tabs li').eq(_showTab).addClass('active')
   $($defaultLi.find('a').attr('href')).show()
   $($defaultLi.find('a').attr('href')).siblings().hide()
 
@@ -58,8 +58,8 @@ function tabDisplay(default_tab = 0) {
   $('ul.tabs li')
     .click(function () {
       // 找出 li 中的超連結 href(#id)
-      var $this = $(this),
-        _clickTab = $this.find('a').attr('href')
+      const $this = $(this)
+      const _clickTab = $this.find('a').attr('href')
       // 把目前點擊到的 li 頁籤加上 .active
       // 並把兄弟元素中有 .active 的都移除 class
       $this.addClass('active').siblings('.active').removeClass('active')
@@ -79,7 +79,7 @@ function tabDisplay(default_tab = 0) {
     })
 }
 
-function indexPad(n, width, z) {
+function indexPad (n, width, z) {
   width = width || 3
   z = z || '0'
   n = n + ''

@@ -1,4 +1,4 @@
-<!-- 
+<!--
 
   <label-select
     v-model=""
@@ -29,10 +29,10 @@
       }
     "
   >
-    <label :for="name" :class="labelClassList" v-if="label !== undefined">
+    <label :for="name" :class="labelClassList" v-if="label !== ''">
       {{ label }}
-      <template v-if="required !== undefined && required == true">
-        <span v-if="noMask == undefined" class="text-sm font-light text-red-400">*</span>
+      <template v-if="required !== undefined && required">
+        <span v-if="!noMask" class="text-sm font-light text-red-400"> * </span>
       </template>
     </label>
 
@@ -78,7 +78,7 @@
         ref="requiredInput"
         v-model="innerValue"
         :name="name"
-        class="left-4 pointer-events-none absolute bottom-0 w-1 opacity-0"
+        class="pointer-events-none absolute bottom-0 left-4 w-1 opacity-0"
         :required="required"
       />
     </div>
@@ -123,17 +123,40 @@ export default {
         return '請選擇'
       }
     },
-    name: '',
-    label: '',
-    selectClass: '',
-    labelClass: '',
-    noMask: false
+    name: {
+      type: String,
+      default: () => {
+        return ''
+      }
+    },
+    label: {
+      type: String,
+      default: () => {
+        return ''
+      }
+    },
+    selectClass: {
+      type: String,
+      default: () => {
+        return ''
+      }
+    },
+    labelClass: {
+      type: String,
+      default: () => {
+        return ''
+      }
+    },
+    noMask: {
+      type: [Boolean, String],
+      default: false
+    }
   },
   model: {
     prop: 'value',
     event: 'update'
   },
-  data() {
+  data () {
     return {
       selectClassList: '',
       labelClassList: 'block pt-5 pb-3',
@@ -151,21 +174,25 @@ export default {
     },
     items: function (newVal) {
       if (newVal.length !== 0) {
-        if (newVal[0][this.itemValue] == undefined) {
+        if (newVal[0][this.itemValue] === undefined) {
           this.itemsValueString = true
         }
       }
     }
   },
   methods: {
-    updateValue() {
+    updateValue () {
       this.$emit('update', this.innerValue)
     },
-    filterOption(inputValue, option) {
-      return option.data.attrs.text.toLowerCase().indexOf(inputValue.toLowerCase()) >= 0
+    filterOption (inputValue, option) {
+      return (
+        option.data.attrs.text
+          .toLowerCase()
+          .indexOf(inputValue.toLowerCase()) >= 0
+      )
     }
   },
-  mounted() {
+  mounted () {
     if ([null, ''].includes(this.value)) {
       this.innerValue = undefined
     }
@@ -179,7 +206,7 @@ export default {
     }
 
     if (this.items.length !== 0) {
-      if (this.items[0][this.itemValue] == undefined) {
+      if (this.items[0][this.itemValue] === undefined) {
         this.itemsValueString = true
       }
     }

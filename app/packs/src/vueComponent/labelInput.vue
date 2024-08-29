@@ -1,4 +1,4 @@
-<!-- 
+<!--
 
   <label-input
     v-model=""
@@ -12,15 +12,15 @@
 
   # 可直接使用 v-model
   # placeholder => 設定空值時顯示的文字
-  
+
 -->
 
 <template>
   <div class="">
-    <label :for="name" :class="labelClassList" v-if="label !== undefined">
+    <label :for="name" :class="labelClassList" v-if="label !== ''">
       {{ label }}
-      <template v-if="required !== undefined && required == true">
-        <span v-if="noMask == undefined" class="text-sm font-light text-red-400">*</span>
+      <template v-if="required !== undefined && required">
+        <span v-if="!noMask" class="text-sm font-light text-red-400"> * </span>
       </template>
     </label>
     <input
@@ -51,11 +51,34 @@ export default {
       type: [Boolean, String],
       default: undefined
     },
-    name: '',
-    label: '',
-    inputClass: '',
-    labelClass: '',
-    noMask: false
+    name: {
+      type: String,
+      default: () => {
+        return ''
+      }
+    },
+    label: {
+      type: String,
+      default: () => {
+        return ''
+      }
+    },
+    inputClass: {
+      type: String,
+      default: () => {
+        return ''
+      }
+    },
+    labelClass: {
+      type: String,
+      default: () => {
+        return ''
+      }
+    },
+    noMask: {
+      type: [Boolean, String],
+      default: false
+    }
   },
   watch: {
     value: function (newVal) {
@@ -66,7 +89,7 @@ export default {
     prop: 'value',
     event: 'update'
   },
-  data() {
+  data () {
     return {
       inputClassList: 'border',
       labelClassList: 'block pt-5 pb-3',
@@ -74,11 +97,11 @@ export default {
     }
   },
   methods: {
-    updateValue() {
+    updateValue () {
       this.$emit('update', this.innerValue)
     }
   },
-  mounted() {
+  mounted () {
     if (this.inputClass !== undefined) {
       this.inputClassList += ' ' + this.inputClass
     }
