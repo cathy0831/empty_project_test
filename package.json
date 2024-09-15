@@ -45,6 +45,7 @@
     "node": ">=16.0.0 <17.0.0"
   },
   "scripts": {
-    "lint": "yarn run eslint --fix --ext .js --ext .jsx --ext .vue app/packs/src --format codeframe"
+    "lint": "yarn run eslint --fix --ext .js --ext .jsx --ext .vue app/packs/src app/packs/entrypoints --format codeframe",
+    "lint:check": "yarn run eslint --ext .js --ext .jsx --ext .vue app/packs/src app/packs/entrypoints --format codeframe"
   }
 }
