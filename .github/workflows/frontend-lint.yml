@@ -1,7 +1,15 @@
 name: Check Coding Style (FrontEnd)
 on:
   push:
+    paths:
+      - '**/*.js'
+      - '**/*.vue'
+      - '.nvmrc'
   pull_request:
+    paths:
+      - '**/*.js'
+      - '**/*.vue'
+      - '.nvmrc'
 
 jobs:
   lint:
