@@ -11,10 +11,7 @@ $(document).ready(function () {
       methods: {
         onLogin (event) {
           event.preventDefault()
-          const hashpwd = hashFnv32a(
-            document.getElementById('login_password').value,
-            true
-          )
+          const hashpwd = hashFnv32a(document.getElementById('login_password').value, true)
           document.getElementById('login_password').value = hashpwd
           event.target.submit()
         }

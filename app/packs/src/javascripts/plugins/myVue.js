@@ -1,3 +1,4 @@
+/* eslint constructor-super: "error" */
 import Vue from 'vue'
 
 const customVue = Vue.extend({

@@ -4,9 +4,9 @@
     "es2021": true
   },
   "extends": [
+    "standard",
     "plugin:vue/essential",
-    "plugin:tailwindcss/recommended",
-    "standard"
+    "plugin:tailwindcss/recommended"
   ],
   "parserOptions": {
     "ecmaVersion": "latest",
@@ -17,14 +17,13 @@
   ],
   "rules": {
     "tailwindcss/no-custom-classname": "off",
-    "no-new": 0,
-    "no-useless-escape": 0,
-    "constructor-super": 0,
-    "camelcase": 0,
-    "new-cap": 0
+    "no-new": "off"
   },
   "globals": {
     "$": "readonly",
-    "Turbo": "readonly"
+    "Turbo": "readonly",
+    "i18n_translations": "readonly",
+    "i18n_locale": "readonly",
+    "I18n": "readonly"
   }
 }
