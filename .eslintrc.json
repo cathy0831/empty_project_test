@@ -25,6 +25,9 @@
   },
   "globals": {
     "$": "readonly",
-    "Turbo": "readonly"
+    "Turbo": "readonly",
+    "i18n_translations": "readonly",
+    "i18n_locale": "readonly",
+    "I18n": "readonly"
   }
 }
