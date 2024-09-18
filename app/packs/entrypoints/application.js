@@ -1,8 +1,5 @@
 import jquery from 'jquery'
 
-window.jQuery = jquery
-window.$ = jquery
-
 import '@hotwired/turbo'
 import Vue from 'vue/dist/vue.esm.js'
 import 'tablesorter'
@@ -10,6 +7,9 @@ import 'tablesorter'
 import vueswal from '@/src/vueComponent/vueSwal.vue'
 import { Select } from 'ant-design-vue'
 import I18n from 'i18n-js'
+
+window.jQuery = jquery
+window.$ = jquery
 
 I18n.locale = i18n_locale
 I18n.translations = i18n_translations
@@ -36,13 +36,13 @@ $(document).on('turbo:load turbo:render', (turboParams) => {
     if (document.getElementById('page-header')) {
       new Vue({
         el: document.getElementById('page-header'),
-        data() {
+        data () {
           return {
             isOpen: false
           }
         },
         methods: {
-          toggleLogoutButton() {
+          toggleLogoutButton () {
             this.isOpen = !this.isOpen
           }
         }
