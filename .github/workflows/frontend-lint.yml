@@ -39,4 +39,4 @@ jobs:
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
       
       - name: Lint check code
-        run: yarn run lint:check
+        run: yarn run eslint --ext .js --ext .jsx --ext .vue app/packs/src app/packs/entrypoints --format codeframe
