@@ -22,7 +22,8 @@
   "globals": {
     "$": "readonly",
     "Turbo": "readonly",
+    "i18n_translations": "readonly",
     "i18n_locale": "readonly",
-    "i18n_translations": "readonly"
+    "I18n": "readonly"
   }
 }
