@@ -1,12 +1,13 @@
+/*eslint constructor-super: "error"*/
 import Vue from 'vue'
 
-const customVue = Vue.extend({
+const CustomVue = Vue.extend({
   beforeMount: function () {
     if (this !== this.$root) return
 
     this.__TurbolinksAdapterOriginalOuterHTML__ = this.$el.outerHTML
     const _this = this
-    document.addEventListener('turbo:before-cache', function teardown () {
+    document.addEventListener('turbo:before-cache', function teardown() {
       _this.$destroy()
       document.removeEventListener('turbo:before-cache', teardown)
     })
@@ -27,7 +28,7 @@ const customVue = Vue.extend({
 })
 
 class myVue extends Vue {
-  constructor (vueOpt) {
+  constructor(vueOpt) {
     const $el = vueOpt.el
     if ($el == null) {
       return
@@ -35,7 +36,7 @@ class myVue extends Vue {
     $el.hidden = true
     $el.style.opacity = 0
     $el.style.transition = '.3s ease'
-    return new customVue(vueOpt)
+    return new CustomVue(vueOpt)
   }
 }
 
