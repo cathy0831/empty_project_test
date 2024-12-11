@@ -13,8 +13,7 @@
   <body class="h-full w-full" data-controller="<%= controller.controller_path.to_s %>" data-action="<%= controller.action_name.to_s %>">
     <%= render "/layouts/header" %>
     <%= render "/layouts/i18n_js" %>
-    <!--<div id="app" class="p-4 md:px-1 min-h-[calc(100vh_-_90px)] sm:min-h-[calc(100vh_-_83px)]">-->
-    <div id="app" class="px-2 md:px-1">
+    <div id="app" class="p-4 md:px-1 min-h-[calc(100vh_-_90px)] sm:min-h-[calc(100vh_-_83px)]">
       <%= yield %>
     </div>
     <%= render "/layouts/footer" %>
