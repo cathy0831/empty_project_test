@@ -41,5 +41,8 @@ module EmptyProject
       g.javascripts     false
       g.helper          false
     end
+
+    # audited 允許序列化類別
+    config.active_record.yaml_column_permitted_classes = [BigDecimal, Date, Enumerize::Value]
   end
 end

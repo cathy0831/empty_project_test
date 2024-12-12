@@ -7,10 +7,8 @@ on:
       - '**/Gemfile'        # 監控 Gemfile 變更
       - '**/Gemfile.lock'   # 監控 Gemfile.lock 變更
   push:
-    paths:
-      - '**/*.rb'           # 只有 Ruby 檔案有變更時觸發
-      - '**/Gemfile'        # 監控 Gemfile 變更
-      - '**/Gemfile.lock'   # 監控 Gemfile.lock 變更
+    branches:
+      - master
 jobs:
   rubocop:
     runs-on: ubuntu-latest
@@ -23,6 +21,9 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true  # 啟用 Bundler 快取加速
+
+      - name: Set up package dependencies(SQLServer)
+        run: sudo apt-get install -y freetds-dev
 
       - name: Install dependencies
         run: bundle install
