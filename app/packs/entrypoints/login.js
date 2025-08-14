@@ -1,1 +1,1 @@
-import '@/src/javascripts/login.js'
+import '@/src/javascripts/session/login.js'

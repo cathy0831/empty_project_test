@@ -59,7 +59,7 @@ table {
 
 .w3-hoverable tbody tr:hover,
 .w3-ul.w3-hoverable li:hover {
-  @apply bg-blue-100;
+  @apply bg-blue-100/50;
 }
 
 .table-sorter-icon {
@@ -85,10 +85,18 @@ table {
     text-align: middle;
     white-space: pre-line;
   }
+
+  .tablesorter-colgroup > col {
+    width: 100% !important;
+  }
 }
 
 .overflow-container {
   @apply w-full overflow-auto overflow-x-auto overflow-y-auto rounded border p-2;
+}
+
+.custom-thead {
+  @apply bg-gray-300 text-gray-800;
 }
 
 /* table */
@@ -108,7 +116,7 @@ select {
 }
 
 .custom-input {
-  @apply focus:outline-none w-full cursor-default rounded-md border border-gray-300 bg-white px-2 py-3 text-left shadow-sm focus:ring-1 sm:text-sm;
+  @apply focus:outline-none w-full cursor-default rounded-[4px] border border-gray-300 bg-white px-2 py-[0.69rem] text-left shadow-sm transition-colors duration-300 hover:border-[#4096ff];
 }
 /* input */
 
@@ -120,45 +128,49 @@ select {
   @include base-button;
 }
 
-.custom-submit-button {
+.custom-primary-button {
   @include base-button;
-  @apply bg-teal-600 border-teal-600 hover:bg-teal-500 cursor-pointer text-white disabled:cursor-not-allowed disabled:border-gray-400 disabled:bg-white disabled:text-gray-400;
+  @apply cursor-pointer border-primary bg-primary text-white hover:bg-primary/90 hover:text-white disabled:cursor-not-allowed disabled:border-gray-400 disabled:bg-white disabled:text-gray-400;
 }
 
-.custom-back-button {
+.custom-secondary-button {
   @include base-button;
-  @apply inline cursor-pointer border-0 bg-white py-3 text-gray-800 hover:bg-gray-100;
+  @apply whitespace-nowrap border-secondary bg-secondary text-white hover:bg-secondary/90 hover:text-white;
 }
 
-.custom-edit-button {
+.custom-cancel-button {
   @include base-button;
-  @apply whitespace-nowrap border-blue-500 bg-blue-500 text-white hover:bg-blue-500 hover:text-white;
+  @apply inline cursor-pointer border-0 bg-gray-100 py-3 text-gray-700 hover:bg-gray-100/50;
 }
 
-.custom-create-button {
+.custom-blue-button {
   @include base-button;
-  @apply border-blue-900 bg-white text-blue-900 hover:bg-gray-50 hover:text-blue-900;
+  @apply whitespace-nowrap border-blue-500 bg-blue-500 text-white hover:bg-blue-500/90 hover:text-white;
 }
 
-.custom-reset-button {
-  @include base-button;
-  @apply border-red-400 bg-white text-red-400 hover:bg-red-400 hover:text-white;
-}
-
-.custom-remove-button {
+.custom-red-button {
   @include base-button;
   @apply cursor-pointer whitespace-nowrap border-red-400 bg-red-400 text-white hover:bg-red-500;
 }
 
-.custom-add-button {
+.custom-outline-gray-button {
   @include base-button;
-  @apply cursor-pointer border-blue-500 bg-blue-500 text-white hover:bg-blue-600;
+  @apply inline cursor-pointer border border-gray-200 bg-white py-3 text-gray-700 hover:bg-gray-100;
+}
+
+.custom-outline-blue-button {
+  @include base-button;
+  @apply border-blue-900 bg-white text-blue-900 hover:bg-gray-50 hover:text-blue-900;
+}
+
+.custom-outline-red-button {
+  @include base-button;
+  @apply border-red-400 bg-white text-red-400 hover:bg-red-400 hover:text-white;
 }
 
 .custom-button-bar {
-  @apply flex w-full justify-end gap-x-2 px-4 pt-10 pb-4;
+  @apply flex w-full justify-end gap-x-2 px-2 pt-10 pb-4;
 }
-
 /* button */
 
 /* sweetAlert */
@@ -171,6 +183,10 @@ select {
 .swal2-container.customSwal {
   button.swal2-confirm {
     @apply bg-blue-500;
+  }
+
+  button.swal2-cancel {
+    @apply bg-gray-400;
   }
 
   &.simpleLoading {
@@ -212,7 +228,6 @@ div:where(.swal2-container) button:where(.swal2-close):hover {
     box-shadow: unset;
   }
 }
-
 /* sweetAlert */
 
 /* session */
@@ -220,3 +235,20 @@ div:where(.swal2-container) button:where(.swal2-close):hover {
   @apply m-4 rounded-lg border-2 border-gray-300 bg-gray-200 py-4 px-8 text-center font-bold text-blue-600 hover:bg-gray-300 hover:text-blue-600;
 }
 /* session */
+
+/* scrollbar */
+.custom-scrollbar {
+  &::-webkit-scrollbar {
+    height: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: theme('colors.gray.100');
+    border-radius: 10px;
+    margin: 20px 0;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: theme('colors.gray.300');
+  }
+}
+/* scrollbar */

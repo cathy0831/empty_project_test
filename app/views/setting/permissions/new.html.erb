@@ -1,0 +1,10 @@
+<setting-navbar></setting-navbar>
+<div class="px-4 container mx-auto md:px-2">
+  <div class="pt-4 px-0">
+    <h3>新增權限&nbsp;<span class="text-red-400 font-light text-sm">*為必填欄位</span></h3>
+  </div>
+  <permission-form
+    :permission="<%= @permission.to_json %>"
+    :permission-items="<%= PERMISSION_ITEMS.to_json %>"
+  ></permission-form>
+</div>

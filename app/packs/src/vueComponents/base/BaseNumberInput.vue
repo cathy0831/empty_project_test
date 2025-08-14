@@ -1,0 +1,96 @@
+<script setup>
+import { toRefs } from 'vue'
+import { InputNumber as AInputNumber } from 'ant-design-vue'
+
+const props = defineProps({
+  label: {
+    type: String
+  },
+  name: {
+    type: String
+  },
+  modelValue: {
+    type: [String, Number]
+  },
+  required: {
+    type: Boolean
+  },
+  unit: {
+    type: String
+  },
+  thousandth: {
+    type: Boolean
+  },
+  customValidate: {
+    type: Boolean
+  },
+  customValidateText: {
+    type: String
+  }
+})
+
+const { label, name, modelValue, required, unit, thousandth, customValidate, customValidateText } =
+  toRefs(props)
+
+function formattedValue (value) {
+  if (!thousandth.value || [null, undefined].includes(modelValue.value)) {
+    return value
+  } else {
+    // 檢查是否為小數
+    if (/^\d+\.\d+$/.test(`${value}`)) {
+      const [integerPart, decimalPart] = `${value}`.split('.')
+      // 整數部分加上千分位符號，保留小數部分
+      return `${integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}.${decimalPart}`
+    } else if (/^0\.\d+$/.test(`${value}`)) {
+      // 如果是純小數則保持原樣
+      return value
+    } else {
+      // 整數部分加上千分位符號
+      return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    }
+  }
+}
+</script>
+<template>
+  <label>
+    <p v-if="label" class="flex items-baseline gap-1 py-1">
+      <span>{{ label }}</span>
+      <span v-if="required" class="text-sm font-light text-red-400">*</span>
+    </p>
+    <div class="relative">
+      <!-- 給原生 form 表單 formData 使用的 input 欄位 -->
+      <input class="hidden" :name="name" :value="modelValue" :required="required" />
+      <a-input-number
+        :value="modelValue"
+        @change="$emit('update:modelValue', $event)"
+        :formatter="formattedValue"
+        class="custom-input"
+        :class="{ 'border-2 border-red-400': customValidate }"
+        :required="required"
+        autocomplete="off"
+        v-bind="$attrs"
+      />
+      <span v-if="unit" class="absolute inset-y-0 right-10 m-auto h-fit text-gray-400">
+        {{ unit }}
+      </span>
+    </div>
+    <p v-if="customValidate" class="mb-0 mt-2 text-sm text-red-400">
+      {{ customValidateText }}
+    </p>
+  </label>
+</template>
+<style lang="scss" scoped>
+:deep(.ant-input-number-input) {
+  font-size: 15px;
+  font-family: Verdana, sans-serif; //same with w3.css
+  color: #000;
+  height: auto;
+  padding: 0;
+}
+:deep(.ant-input-number-handler) {
+  height: 50% !important;
+  &:hover {
+    height: 50% !important;
+  }
+}
+</style>

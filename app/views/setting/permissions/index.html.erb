@@ -1,0 +1,41 @@
+<%= render "/notice" %>
+<% if flash[:notice] == "permission qry-error" %>
+  <div class="container"><p class="text-red-800">無查詢權限</p></div>
+<% elsif %>
+<setting-navbar></setting-navbar>
+<div class="px-4 container mx-auto md:px-2">
+  <div class="py-4 flex justify-between items-center">
+    <h3 class="">權限設定</h3>
+    <div class="">
+      <%= link_to "新增權限", new_setting_permission_path, class: "custom-secondary-button" %>
+    </div>
+  </div>
+  <table class="w3-table w3-bordered w3-hoverable tablesorter mb-4">
+    <thead class="md:hidden">
+      <tr class="custom-thead">
+        <th class="filter-false sorter-false w-[7rem]"></th>
+        <th class="filter-select sorter-false">狀態</th>    
+        <th>群組名稱</th>
+      </tr>
+    </thead>
+    <tbody class="md:flex md:flex-col">
+      <% @permissions.each do |permission| %>
+      <%= content_tag :tr, "", class: permission.state == "disable" ? "bg-gray-400 md:grid md:grid-cols-3" : "md:grid md:grid-cols-3" do %>
+      <td class="md:col-span-3">
+        <%= link_to edit_setting_permission_path(permission.id), class: "custom-primary-button" do %>
+          <i class="icon-edit-1"></i>
+          編輯
+        <% end %>
+      </td>
+      <td data-title="狀態" class="md:col-span-3 pl-2">
+        <%= t("state.#{permission.state}") %>
+      </td>
+      <td data-title="群組名稱" class="md:col-span-3">
+        <%= permission.name %>
+      </td>
+      <% end %>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
+</div>

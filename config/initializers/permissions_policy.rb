@@ -9,3 +9,9 @@
 #   f.fullscreen  :self
 #   f.payment     :self, "https://secure.example.com"
 # end
+PERMISSION_ITEMS = [
+  { module: "user", actions: %w[search edit] },
+  { module: "permission", actions: %w[search edit] },
+].freeze
+
+SETTING_MODULES = %w[user permission].freeze

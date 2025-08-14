@@ -1,18 +1,18 @@
 <div id="notice">
 <% if flash[:notice].present? %>
-  <vueswal 
+  <base-alert 
     type="toast"
     :title="'<%= flash[:notice] %>'">
-  </vueswal>
+  </base-alert>
 <% elsif flash[:error].present? %>
-  <vueswal 
+  <base-alert 
     type="error"
     :title="'<%= flash[:error] %>'">
-  </vueswal>
+  </base-alert>
 <% elsif flash[:alert].present? %>
-  <vueswal 
+  <base-alert 
     type="error"
     :title="'<%= flash[:alert] %>'">
-  </vueswal>
+  </base-alert>
 <% end %>
 </div>

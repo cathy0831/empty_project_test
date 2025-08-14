@@ -1,0 +1,46 @@
+<%= render "/notice" %>
+<% if flash[:notice] == "permission qry-error" %>
+  <div class="container"><p class="text-red-800">無查詢權限</p></div>
+<% elsif %>
+<setting-navbar></setting-navbar>
+<div class="px-4 container mx-auto md:px-2">
+  <div class="py-4 flex justify-between items-center">
+    <h3 class="">使用者設定</h3>
+    <div class="">
+      <%= link_to "新增使用者", new_setting_user_path, class: "custom-secondary-button" %>
+    </div>
+  </div>
+  <tablesorter-search></tablesorter-search>
+  <table class="w3-table w3-bordered w3-hoverable tablesorter mb-4">
+    <thead class="md:hidden">
+      <tr class="custom-thead">
+        <th class="filter-false sorter-false w-[7rem]"></th>
+        <th class="filter-select sorter-false">狀態</th>    
+        <th>帳號</th>
+        <th>姓名</th>
+      </tr>
+    </thead>
+    <tbody class="md:flex md:flex-col">
+      <% @users.each do |user| %>
+      <%= content_tag :tr, "", class: user.state == "disable" ? "bg-gray-400 md:grid md:grid-cols-3" : "md:grid md:grid-cols-3" do %>
+      <td class="md:col-span-3">
+        <%= link_to edit_setting_user_path(user.id), class: "custom-primary-button" do %>
+          <i class="icon-edit-1"></i>
+          編輯
+        <% end %>
+      </td>
+      <td data-title="狀態" class="md:col-span-3 pl-2">
+        <%= t("state.#{user.state}") %>
+      </td>
+      <td data-title="帳號" class="md:col-span-3">
+        <%= user.account %>
+      </td>
+      <td data-title="姓名" class="md:col-span-3">
+        <%= user.name %>
+      </td>
+      <% end %>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
+</div>

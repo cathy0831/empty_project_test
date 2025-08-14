@@ -4,3 +4,9 @@ zh-TW:
       user:
         account: "帳號"
         password: "密碼"
+  perm_module:
+    user: "人員管理"
+    permission: "權限管理"
+  perm_action:
+    search: "查詢"
+    edit: "編輯"

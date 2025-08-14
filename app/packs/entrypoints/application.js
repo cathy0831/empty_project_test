@@ -1,64 +1,20 @@
-import jquery from 'jquery'
+import * as Turbo from '@hotwired/turbo'
+import { I18n } from 'i18n-js'
+import '@/src/javascripts/layouts/header.js'
+import '@/src/javascripts/session/index.js'
+import '@/src/javascripts/setting/users.js'
+import '@/src/javascripts/setting/permissions.js'
 
-import '@hotwired/turbo'
-import Vue from 'vue/dist/vue.esm.js'
-import 'tablesorter'
+Turbo.start()
 
-import vueswal from '@/src/vueComponent/vueSwal.vue'
-import { Select } from 'ant-design-vue'
-import I18n from 'i18n-js'
-
-window.jQuery = jquery
-window.$ = jquery
-
-I18n.locale = i18n_locale
-I18n.translations = i18n_translations
-window.I18n = I18n
-
-Vue.use(Select)
-$(document).on('turbo:load turbo:render', (turboParams) => {
-  if (document.getElementById('notice')) {
-    new Vue({
-      el: document.getElementById('notice'),
-      components: {
-        vueswal
-      },
-      mounted: function () {
-        $.ajaxSetup({
-          headers: {
-            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-          }
-        })
-      }
-    })
+const initializingI18n = () => {
+  const i18n = new I18n()
+  if (window.i18n_locale) {
+    i18n.locale = window.i18n_locale
   }
-  if (turboParams.type === 'turbo:load') {
-    if (document.getElementById('page-header')) {
-      new Vue({
-        el: document.getElementById('page-header'),
-        data () {
-          return {
-            isOpen: false
-          }
-        },
-        methods: {
-          toggleLogoutButton () {
-            this.isOpen = !this.isOpen
-          }
-        }
-      })
-    }
-
-    const $tablesorter = $('.tablesorter')
-    $tablesorter.tablesorter({
-      duplicateSpan: true,
-
-      widthFixed: true,
-      widgets: ['filter'],
-      widgetOptions: {
-        filter_external: 'input.search',
-        filter_reset: '.reset'
-      }
-    })
+  if (window.i18n_translations) {
+    i18n.translations = window.i18n_translations
   }
-})
+  window.I18n = i18n
+}
+initializingI18n()

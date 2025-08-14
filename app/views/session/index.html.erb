@@ -1,31 +1,11 @@
 <%= render "/notice" %>
-<%modules = [{
-  link: root_path,
-  name: "基本設定",
-  icon: "icon-setting-hollow",
-  perm: true
-}, {
-  link: root_path,
+<% modules = [{
+  link: setting_users_path,
   name: "基本設定",
   icon: "icon-setting-hollow",
   perm: true
 }]
 %>
-<div class="container mx-auto flex justify-center">
-  <div class="max-w-[768px] px-4">
-    <div>
-      <div class=" flex item-center gap-3 flex-wrap">
-        <% modules.each do |item| %>
-          <% if item[:perm] %>
-            <a 
-            class="session-button" 
-            href="<%= item[:link] %>">
-              <i class="<%= item[:icon] %> text-[4rem]"></i>
-              <p class="mt-1 whitespace-nowrap text-2xl"><%= item[:name] %></p>
-            </a>
-          <% end %>
-        <% end %>
-      </div>
-    </div>
-  </div>    
-</div>
+<index-page
+  :module-list="<%= modules.to_json %>"
+></index-page>

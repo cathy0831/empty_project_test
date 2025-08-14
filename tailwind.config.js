@@ -32,7 +32,10 @@ module.exports = {
         // '2xl': '1536px',
       },
       colors: {
-        ag: {
+        primary: '#4479b6',
+        secondary: '#8bb03e',
+        tertiary: '#1d4481',
+        system: {
           textgray: {
             1: '#FAFAFA',
             2: '#BDBDBD',

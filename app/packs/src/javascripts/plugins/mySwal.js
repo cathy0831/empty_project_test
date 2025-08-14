@@ -14,7 +14,7 @@ const customSwal = function () {
     reverseButtons: true
   })
   mixinSwal.simpleLoading = function (title = undefined) {
-    if (typeof (title) === 'boolean' && !title) {
+    if (typeof title === 'boolean' && !title) {
       mixinSwal.close()
       return false
     }
@@ -32,75 +32,73 @@ const customSwal = function () {
       }
     })
   }
-  mixinSwal.confirm = async function (opt = { title: '', text: '', icon: 'question' }) {
-    return await mixinSwal.fire({
-      ...opt,
-      ...{
+  mixinSwal.confirm = async function (opt = { title: '', text: '' }) {
+    return await mixinSwal
+      .fire({
+        icon: 'question',
         showCancelButton: true,
-        focusCancel: true
-      }
-    })
+        focusCancel: true,
+        ...opt
+      })
       .then((result) => {
         return result.isConfirmed
       })
   }
   mixinSwal.input = async function (opt) {
     return await mixinSwal.fire({
-      ...{
-        input: 'text',
-        showCancelButton: true
-      },
+      input: 'text',
+      showCancelButton: true,
       ...opt
     })
   }
   mixinSwal.error = async function (opt = { title: '', text: '' }) {
-    return mixinSwal.fire({
-      ...opt,
-      ...{
+    return mixinSwal
+      .fire({
+        ...opt,
         icon: 'error'
-      }
-    })
+      })
+      .then((result) => {
+        return result.isConfirmed
+      })
   }
   mixinSwal.success = async function (opt = { title: '', text: '' }) {
     return mixinSwal.fire({
       ...opt,
-      ...{
-        icon: 'success',
-        timer: 5000
-      }
+      icon: 'success',
+      timer: 5000
     })
   }
   mixinSwal.toast = function (opt) {
     mixinSwal.fire({
       ...opt,
-      ...{
-        toast: true,
-        icon: 'success',
-        position: 'top-end',
-        customClass: {
-          container: 'toast'
-        },
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.addEventListener('mouseenter', swal.stopTimer)
-          toast.addEventListener('mouseleave', swal.resumeTimer)
-          toast.addEventListener('click', () => {
-            swal.close()
-            swal.toggleTimer()
-          })
-        }
+      toast: true,
+      icon: 'success',
+      position: 'top-end',
+      customClass: {
+        container: 'toast'
+      },
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', swal.stopTimer)
+        toast.addEventListener('mouseleave', swal.resumeTimer)
+        toast.addEventListener('click', () => {
+          swal.close()
+          swal.toggleTimer()
+        })
       }
     })
   }
-  mixinSwal.warning = async function (opt = { title: '', text: '' }) {
-    return mixinSwal.fire({
-      ...opt,
-      ...{
+  mixinSwal.warningConfirm = async function (opt = { title: '', text: '' }) {
+    return mixinSwal
+      .fire({
+        ...opt,
         icon: 'warning'
-      }
-    })
+      })
+      .then((result) => {
+        return result.isConfirmed
+      })
   }
   return mixinSwal
 }

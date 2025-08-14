@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite'
 import RubyPlugin from 'vite-plugin-ruby'
-import vue from '@vitejs/plugin-vue2'
+import vue from '@vitejs/plugin-vue';
 import inject from '@rollup/plugin-inject'
 
 export default defineConfig({
