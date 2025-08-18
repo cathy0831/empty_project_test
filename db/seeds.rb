@@ -1,6 +1,9 @@
-if User.all.empty?
-  User.create(id: -1, account: "AMASSYS", password: "49d46c35",
-              name: "AMASsys", state: "system")
-  User.create(id: -2, account: "AMASUSER", password: "49d46c35",
-              name: "AMASuser", state: "system")
+Seed_Logger = Logger.new($stdout)
+
+load Rails.root.join("db/seeds/permissions.rb")
+load Rails.root.join("db/seeds/users.rb")
+
+# 開發測試seed
+if Rails.env.development?
+  # TODO
 end

@@ -1,0 +1,18 @@
+<% items = [
+  {
+    name: "使用者管理",
+    url: "/setting/users",
+    controllers: ["setting/users"],
+    perm: true
+  },
+  {
+    name: "權限管理",
+    url: "/setting/permissions",
+    controllers: ["setting/permissions"],
+    perm: true
+  },
+]
+%>
+<base-navbar
+  :items="<%= items.to_json %>"
+></base-navbar>

@@ -1,6 +1,11 @@
 class SessionController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:new, :create]
+  skip_before_action :authenticate_user!, only: [:index, :new, :create]
   protect_from_forgery except: [:new, :create]
+
+  # GET "/index"
+  def index
+    redirect_to login_path and return if current_user.nil?
+  end
 
   # GET "/login"
   def new
@@ -14,17 +19,27 @@ class SessionController < ApplicationController
     actor = Session::Authenticate.result(user_params)
     if actor.success?
       sign_in(actor.user)
-      redirect_to (params[:redirect_path] || root_path), notice: t(".success")
+      render json: { status: 0, message: t(".success") }
     else
-      flash[:alert] = actor.error
-      render :login, layout: false, status: :unauthorized
+      render json: { status: -1, message: t(".fail"), error: actor.error }, status: :unauthorized
     end
   end
 
   # DELETE "/logout"
   def destroy
     sign_out if session[:user_id]
-    redirect_to login_path, notice: t(".success")
+    redirect_to login_path
+  end
+
+  # POST "/reset_password"
+  def reset_password
+    actor = Session::ResetPassword.result(password_params)
+    if actor.success?
+      render json: { status: 0, message: t(".success") }
+    else
+      Error_Logger.error "[#{controller_name}##{action_name}] #{actor.error}"
+      render json: { status: -1, message: t(".fail"), error: actor.error }
+    end
   end
 
   private
@@ -33,6 +48,14 @@ class SessionController < ApplicationController
     {
       account: params[:account],
       password: params[:password],
+    }
+  end
+
+  def password_params
+    {
+      user: current_user,
+      old_password: params[:old_password],
+      new_password: params[:new_password],
     }
   end
 end

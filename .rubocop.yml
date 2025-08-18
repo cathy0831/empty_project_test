@@ -1,7 +1,8 @@
-require:
+plugins:
   - rubocop-erb
   - rubocop-rails
   - rubocop-rspec
+
 AllCops:
   SuggestExtensions: false
   NewCops: enable
@@ -188,4 +189,4 @@ Rails/UnknownEnv:
 # Bundler Cops
 
 Bundler/OrderedGems:
-  Enabled: false
+  Enabled: true

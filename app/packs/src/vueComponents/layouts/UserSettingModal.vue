@@ -49,11 +49,16 @@ const submitForm = async () => {
         data: rest
       })
 
-      if (response.state === 0) {
+      if (response.status === 0) {
         mySwal.success({
-          title: '密碼變更成功'
+          title: response.message
         })
         closeUserSetting()
+      } else {
+        mySwal.error({
+          title: response.message,
+          text: response.error
+        })
       }
     } catch (error) {
       console.error('Error:', error)

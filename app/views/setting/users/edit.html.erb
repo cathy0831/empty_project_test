@@ -3,5 +3,8 @@
   <div class="pt-4 px-0">
     <h3>編輯使用者&nbsp;<span class="text-red-400 font-light text-sm">*為必填欄位</span></h3>
   </div>
-  <user-form :user="<%= @user.to_json %>"></user-form>
+  <user-form 
+    :user="<%= @user.to_json %>"
+    :permissions="<%= @permissions.to_json %>"
+  ></user-form>
 </div>

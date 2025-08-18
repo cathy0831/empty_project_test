@@ -1,12 +1,14 @@
 zh-TW:
   activerecord:
+    models:
+      user: "使用者"
     attributes:
       user:
         account: "帳號"
+        name: "姓名"
+        email: "電子郵件"
         password: "密碼"
-  perm_module:
-    user: "人員管理"
-    permission: "權限管理"
-  perm_action:
-    search: "查詢"
-    edit: "編輯"
+      permission:
+        name: "名稱"
+  
+  

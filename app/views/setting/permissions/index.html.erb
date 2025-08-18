@@ -16,23 +16,42 @@
         <th class="filter-false sorter-false w-[7rem]"></th>
         <th class="filter-select sorter-false">狀態</th>    
         <th>群組名稱</th>
+        <% PERMISSION_ITEMS.each do |permission_item| %>
+          <th><%= t("perm_module.#{permission_item[:module]}") %></th>
+        <% end %>
       </tr>
     </thead>
     <tbody class="md:flex md:flex-col">
       <% @permissions.each do |permission| %>
-      <%= content_tag :tr, "", class: permission.state == "disable" ? "bg-gray-400 md:grid md:grid-cols-3" : "md:grid md:grid-cols-3" do %>
-      <td class="md:col-span-3">
-        <%= link_to edit_setting_permission_path(permission.id), class: "custom-primary-button" do %>
-          <i class="icon-edit-1"></i>
-          編輯
+      <%= content_tag :tr, "", class: permission[:state] == "disable" ? "bg-gray-400 md:grid md:grid-cols-3" : "md:grid md:grid-cols-3" do %>
+        <td class="md:col-span-3">
+          <%= link_to edit_setting_permission_path(permission[:id]), class: "custom-primary-button" do %>
+            <i class="icon-edit-1"></i>
+            編輯
+          <% end %>
+        </td>
+        <td data-title="狀態" class="md:col-span-3 pl-2">
+          <%= permission[:state].text %>
+        </td>
+        <td data-title="群組名稱" class="md:col-span-3">
+          <%= permission[:name] %>
+        </td>
+        <% PERMISSION_ITEMS.each do |permission_item| %>
+        <%= content_tag "td", data: { title: t("perm_module.#{permission_item[:module]}") }, class: "align-top pt-5 md:pt-2 md:grid md:grid-cols-3 md:col-span-3" do %>
+          <% content = permission[:content] %>
+          <div class="md:grid md:grid-cols-2 md:col-span-2">
+          <% permission_item[:actions].each do |action_name| %>
+            <div class="flex gap-x-2">
+              <% if content[permission_item[:module]][action_name] == "1" %>
+              <i class="icon-ok text-green-600"></i>
+              <% else %>
+              <i class="icon-cancel-1 text-red-500"></i>
+              <% end %>
+              <%= t("perm_action.#{action_name}") %>
+            </div>
+          <% end %>
         <% end %>
-      </td>
-      <td data-title="狀態" class="md:col-span-3 pl-2">
-        <%= t("state.#{permission.state}") %>
-      </td>
-      <td data-title="群組名稱" class="md:col-span-3">
-        <%= permission.name %>
-      </td>
+        <% end %>
       <% end %>
       <% end %>
     </tbody>

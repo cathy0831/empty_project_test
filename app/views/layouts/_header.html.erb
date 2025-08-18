@@ -1,29 +1,35 @@
-<div class="flex items-stretch justify-between flex-wrap" id="page-header">
-  <h2 class="my-0 flex-1 text-2xl font-bold bg-primary text-white pl-2 py-3 sm:text-xl">
-    <div class="flex items-center gap-2">
-      <%= link_to root_path, class: "flex items-center no-underline gap-x-2" do %>
-      <!--<img src="<%= vite_asset_path("images/longsun_logo.png") %>" alt="榮昇科技" class="h-[2.5rem] py-2 sm:h-14">-->
-      <span class="inline-block bottom-0 px-2"><%= t("system_name") %></span>
-      <% end %>
-    </div>
-  </h2>
-  <% if current_user.present? %>
-    <div class="flex items-center bg-primary" @click="toggleLogoutButton">
-      <span class="whitespace-nowrap px-4 text-lg font-medium text-white md:text-base">
+<div id="page-header" class="flex sm:flex-col">
+  <div class="flex-1 flex items-stretch justify-between sm:text-sm">
+    <h2 class="my-0 flex-1 text-2xl font-bold bg-primary text-white pl-2 py-3 sm:text-xl">
+      <div class="flex items-center gap-2">
+        <%= link_to root_path, class: "flex items-center no-underline gap-x-2" do %>
+        <span class="inline-block bottom-0 px-2 sm:w-[11em] sm:px-1"><%= t("system_name") %></span>
+        <% end %>
+      </div>
+    </h2>
+    <% if current_user.present? %>
+    <div class="flex max-w-[20em] items-center bg-primary break-all sm:cursor-pointer" @click="toggleLogoutButton">
+      <p class="min-w-[8em] px-4 text-lg leading-6 font-medium text-white break-all md:text-base sm:px-2 sm:flex-wrap">
         <%= "#{t('hello')}, " %>
         <%= current_user.name %>
-      </span>
+      </p>
+      <i class="icon-menu hidden text-lg text-white sm:pr-1 sm:block"></i>
     </div>
-    <div class="flex items-center border-x border-gray-300 bg-primary hover:bg-primary/80 cursor-pointer" @click="openUserSetting">
-      <span class="whitespace-nowrap px-4 text-lg font-bold text-white md:text-base">
+    <% end %>
+  </div>
+  <% if current_user.present? %>
+  <div class="flex sm:w-full" :class="{'sm:hidden': !isOpen}" class="text-lg md:text-base transition duration-150 ease-in-out">
+    <div class="flex-1 flex items-center border-x border-gray-300 bg-primary cursor-pointer text-white hover:bg-primary/80 sm:border-t sm:border-l-0" @click="openUserSetting">
+      <span class="px-4 whitespace-nowrap text-center font-medium sm:w-full">
         變更密碼
       </span>
     </div>
-    <div class="flex sm:w-full" :class="isOpen ? 'sm:block' : 'sm:hidden'">
-      <%= button_to "登出", logout_path, method: "delete",
-        form_class: "flex items-center text-lg leading-5 font-medium bg-primary text-white transition duration-150 ease-in-out hover:bg-primary/80 sm:block sm:w-full sm:border-t md:text-base cusor-pointer", class: "w-full h-full px-4 py-2"
-        %>
-    </div>
-    <user-setting-modal></user-setting-modal>
+    <%= button_to "登出", logout_path,
+           method: "delete",
+           form_class: "flex-1 flex items-center border-gray-300 bg-primary cursor-pointer text-white hover:bg-primary/80 sm:border-t sm:border-x-0",
+           class: "w-full h-full px-4 py-2 font-medium"
+      %>
+  </div>
+  <user-setting-modal></user-setting-modal>
   <% end %>
 </div>

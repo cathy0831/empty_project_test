@@ -15,9 +15,8 @@ class Session::Authenticate < Actor
 
   def authenticate?(user, _password)
     return false if user.nil?
-
-    # return false unless user.authenticate(password)
-    # return false unless user.enable?
+    return false unless user.authenticate(password)
+    return false unless user.active?
 
     true
   end
@@ -27,6 +26,6 @@ class Session::Authenticate < Actor
   end
 
   def invaild_user
-    fail!(error: I18n.t("actor.authenticate.invalid_user"))
+    fail!(error: I18n.t("actor.session.invalid_user"))
   end
 end

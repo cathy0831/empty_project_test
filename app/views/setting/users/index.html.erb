@@ -18,25 +18,29 @@
         <th class="filter-select sorter-false">狀態</th>    
         <th>帳號</th>
         <th>姓名</th>
+        <th>權限</th>
       </tr>
     </thead>
     <tbody class="md:flex md:flex-col">
       <% @users.each do |user| %>
-      <%= content_tag :tr, "", class: user.state == "disable" ? "bg-gray-400 md:grid md:grid-cols-3" : "md:grid md:grid-cols-3" do %>
+      <%= content_tag :tr, "", class: user[:state] == "disable" ? "bg-gray-400 md:grid md:grid-cols-3" : "md:grid md:grid-cols-3" do %>
       <td class="md:col-span-3">
-        <%= link_to edit_setting_user_path(user.id), class: "custom-primary-button" do %>
+        <%= link_to edit_setting_user_path(user[:id]), class: "custom-primary-button" do %>
           <i class="icon-edit-1"></i>
           編輯
         <% end %>
       </td>
       <td data-title="狀態" class="md:col-span-3 pl-2">
-        <%= t("state.#{user.state}") %>
+        <%= user[:state].text %>
       </td>
       <td data-title="帳號" class="md:col-span-3">
-        <%= user.account %>
+        <%= user[:account] %>
       </td>
       <td data-title="姓名" class="md:col-span-3">
-        <%= user.name %>
+        <%= user[:name] %>
+      </td>
+      <td data-title="權限" class="md:col-span-3">
+        <%= user[:permission][:name] %>
       </td>
       <% end %>
       <% end %>

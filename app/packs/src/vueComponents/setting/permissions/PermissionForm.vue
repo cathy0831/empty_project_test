@@ -1,6 +1,7 @@
 <script setup>
 import { ref, toRefs, onBeforeMount, computed } from 'vue'
 import myAxios from '@/src/javascripts/plugins/myAxios.js'
+import mySwal from '@/src/javascripts/plugins/mySwal.js'
 import BaseTextInput from '@/src/vueComponents/base/BaseTextInput.vue'
 import BaseCheckbox from '@/src/vueComponents/base/BaseCheckbox.vue'
 import StateRadio from '@/src/vueComponents/base/StateRadio.vue'
@@ -19,10 +20,11 @@ const props = defineProps({
 const { permission, permissionItems } = toRefs(props)
 const permissionInfo = ref({})
 onBeforeMount(() => {
-  permissionInfo.value = { ...permission.value }
+  permissionInfo.value = { ...permission.value, content: permission.value.content }
   if (isNewAction()) {
     permissionInfo.value = {
       ...permissionInfo.value,
+      state: 'enable',
       content: permissionItems.value.reduce((acc, item) => {
         const { module, actions } = item
         acc[module] = {}
@@ -31,20 +33,6 @@ onBeforeMount(() => {
         })
         return acc
       }, {})
-    }
-  }
-})
-const baseUrl = '/setting/permissions'
-const actionHelper = computed(() => {
-  if (isNewAction()) {
-    return {
-      method: 'post',
-      url: baseUrl
-    }
-  } else {
-    return {
-      method: 'patch',
-      url: `${baseUrl}/${permissionInfo.value.id}`
     }
   }
 })
@@ -57,19 +45,17 @@ const i18nPermActionName = (actionKey) => {
   return I18n.t(`perm_action.${actionKey}`)
 }
 
-const checkAllAction = (permKey, permObj) => {
-  const isAllChecked = Object.values(permObj).every((actionValue) => actionValue === '1')
-
-  Object.keys(permObj).forEach((actionKey) => {
-    permObj[actionKey] = isAllChecked ? null : '1'
+const checkAllAction = (permKey) => {
+  const moduleActionObj = permissionInfo.value.content[permKey]
+  const isAllChecked = Object.values(moduleActionObj).every((actionValue) => actionValue === '1')
+  Object.keys(moduleActionObj).forEach((actionKey) => {
+    moduleActionObj[actionKey] = isAllChecked ? '0' : '1'
   })
 }
 
 const controlSearchAction = ({ checked, value }, permKey, actionKey) => {
   const current = permissionInfo.value.content[permKey]
-
   const newValue = checked ? value : null
-
   current[actionKey] = newValue
 
   // 以下是互相連動邏輯
@@ -86,13 +72,29 @@ const controlSearchAction = ({ checked, value }, permKey, actionKey) => {
   }
 }
 
+const baseUrl = '/setting/permissions'
+const actionHelper = computed(() => {
+  if (isNewAction()) {
+    return {
+      method: 'post',
+      url: baseUrl
+    }
+  } else {
+    return {
+      method: 'patch',
+      url: `${baseUrl}/${permissionInfo.value.id}`
+    }
+  }
+})
+
 const onSubmitForm = async (event) => {
   if (!event.target.reportValidity()) return false
 
+  mySwal.simpleLoading()
   const permissionData = {
     state: permissionInfo.value.state,
     name: permissionInfo.value.name,
-    content: permissionInfo.value.content
+    content: JSON.stringify(permissionInfo.value.content)
   }
 
   try {
@@ -102,12 +104,17 @@ const onSubmitForm = async (event) => {
       data: permissionData
     })
 
-    if (response.state === 0) {
+    if (response.status === 0) {
       visit(baseUrl)
-    } else if (response.state === 1) {
+    } else if (response.status === 1) {
       visit('/setting')
-    } else if (response.state === 2) {
+    } else if (response.status === 2) {
       visit('/')
+    } else {
+      mySwal.error({
+        title: response.message,
+        text: response.error
+      })
     }
   } catch (error) {
     console.error('Error:', error)
@@ -118,44 +125,38 @@ const onSubmitForm = async (event) => {
 <template>
   <form @submit.prevent="onSubmitForm" class="leave-need-confirm" autocomplete="off">
     <div class="mb-4 grid grid-cols-2 gap-x-4 gap-y-0 md:grid-cols-1">
-      <state-radio v-model="permissionInfo.state"></state-radio>
-      <BaseTextInput
-        :label="'名稱'"
-        :name="'name'"
-        v-model="permissionInfo.name"
-        :maxlength="20"
-        required
-      />
+      <StateRadio v-model="permissionInfo.state" />
+      <BaseTextInput :label="'名稱'" :name="'name'" v-model="permissionInfo.name" required />
     </div>
     <div
       v-if="permissionInfo.content"
       class="mb-4 grid grid-cols-4 rounded-md border border-gray-200 xl:grid-cols-2"
     >
       <div
-        v-for="(permObj, permKey) in permissionInfo.content"
-        :key="permKey"
+        v-for="permItem in permissionItems"
+        :key="permItem.module"
         class="rounded-none border border-l-0 border-t-0 border-gray-200 p-4"
       >
         <label class="block pb-3 font-bold">
-          <span @click="checkAllAction(permKey, permObj)">
-            {{ i18nPermName(permKey) }}
+          <span @click="checkAllAction(permItem.module)">
+            {{ i18nPermName(permItem.module) }}
           </span>
         </label>
         <div class="flex flex-wrap gap-4">
-          <div v-for="(actionValue, actionKey) in permObj" :key="`${permKey}_${actionKey}`">
+          <div v-for="actionKey in permItem.actions" :key="`${permItem.module}_${actionKey}`">
             <BaseCheckbox
-              :name="`content[${permKey}][${actionKey}]`"
+              :name="`content[${permItem.module}][${actionKey}]`"
               :value="'1'"
               :label="i18nPermActionName(actionKey)"
-              :modelValue="actionValue"
-              @update:modelValue="controlSearchAction($event, permKey, actionKey)"
+              :modelValue="permissionInfo.content[permItem.module][actionKey]"
+              @update:modelValue="controlSearchAction($event, permItem.module, actionKey)"
             />
           </div>
         </div>
       </div>
     </div>
     <div class="custom-button-bar">
-      <a href="/setting/permissions" class="custom-cancel-button">回權限列表</a>
+      <a :href="baseUrl" class="custom-cancel-button">回權限列表</a>
       <button type="submit" class="custom-primary-button">送出</button>
     </div>
   </form>

@@ -26,6 +26,9 @@ const { user, permissions } = toRefs(props)
 const userInfo = ref({})
 onBeforeMount(() => {
   userInfo.value = { ...user.value }
+  if (!isNewAction()) {
+    userInfo.value.permission_id = userInfo.value.permission.id
+  }
 })
 
 const baseUrl = '/setting/users'

@@ -1,3 +1,32 @@
 echo "✨ pre-commit hook is running!"
 
-yarn lint-staged
+# JavaScript 檢查
+if ! yarn lint-staged; then
+  echo "🚫 lint-staged failed，請修正後再提交！"
+  exit 1
+fi
+
+# 取得已 staged 和 unstaged 的 Ruby 檔案（新增/修改/複製）
+staged_files=$(git diff --cached --name-only --diff-filter=ACM | sort)
+unstaged_files=$(git diff --name-only --diff-filter=ACM | sort)
+
+# 找出同時存在 staged 和 unstaged 的檔案（提醒忘記 git add）
+echo "$staged_files" > /tmp/staged.txt
+echo "$unstaged_files" > /tmp/unstaged.txt
+
+overlap_files=$(comm -12 /tmp/staged.txt /tmp/unstaged.txt)
+if [ -n "$overlap_files" ]; then
+  echo "🚫 你有修改後忘記放進暫存區的檔案，請先 git add！"
+  echo "$overlap_files"
+  rm /tmp/staged.txt /tmp/unstaged.txt
+  exit 1
+fi
+rm /tmp/staged.txt /tmp/unstaged.txt
+
+# 如果有 staged 的 Ruby 檔案，跑 RuboCop 檢查
+if [ -n "$staged_files" ]; then
+  if ! bundle exec rubocop --force-exclusion --format simple $staged_files; then
+    echo "🚫 RuboCop 檢查未通過，請修正程式碼格式！"
+    exit 1
+  fi
+fi

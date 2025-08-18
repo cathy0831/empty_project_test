@@ -1,6 +1,11 @@
 zh-TW:
   actor:
+    session:
+      invalid_user: "登入失敗"
+      invalid_old_password: "舊密碼驗證失敗"
+      invalid_new_password: "新密碼格式錯誤"
+    permission:
+      default_permission: ""
+
     user: 
       verify_password_failed: "密碼驗證失敗"
-    authenticate:
-      invalid_user: "登入失敗"

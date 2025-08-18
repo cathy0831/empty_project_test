@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_01_000001) do
+ActiveRecord::Schema[7.1].define(version: 2025_01_02_000001) do
   create_table "active_storage_attachments", charset: "utf8mb4", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -61,7 +61,18 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_01_000001) do
     t.index ["user_id", "user_type"], name: "user_index"
   end
 
+  create_table "permissions", charset: "utf8mb4", force: :cascade do |t|
+    t.string "name"
+    t.text "content"
+    t.text "note"
+    t.integer "state", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_permissions_on_name", unique: true
+  end
+
   create_table "users", charset: "utf8mb4", force: :cascade do |t|
+    t.bigint "permission_id"
     t.string "account"
     t.string "password_digest"
     t.string "name"
@@ -70,8 +81,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_01_000001) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["account"], name: "index_users_on_account", unique: true
+    t.index ["permission_id"], name: "index_users_on_permission_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "users", "permissions"
 end

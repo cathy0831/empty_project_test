@@ -1,60 +1,47 @@
 require "active_support/core_ext/integer/time"
 
-# The test environment is used exclusively to run your application's
-# test suite. You never need to work with it otherwise. Remember that
-# your test database is "scratch space" for the test suite and is wiped
-# and recreated between test runs. Don't rely on the data there!
-
 Rails.application.configure do
-  # Settings specified here will take precedence over those in config/application.rb.
-
-  # Turn false under Spring and add config.action_view.cache_template_loading = true.
+  # 測試環境會加快測試速度，不需重載程式碼
   config.cache_classes = true
 
-  # Eager loading loads your whole application. When running a single test locally,
-  # this probably isn't necessary. It's a good idea to do in a continuous integration
-  # system, or in some way before deploying your code.
-  config.eager_load = ENV["CI"].present?
+  # 不需要 eager load，節省啟動時間
+  config.eager_load = false
 
-  # Configure public file server for tests with Cache-Control for performance.
-  config.public_file_server.enabled = true
-  config.public_file_server.headers = {
-    "Cache-Control" => "public, max-age=#{1.hour.to_i}",
-  }
+  # 不顯示錯誤頁面，測試用報錯即可
+  config.consider_all_requests_local = true
 
-  # Show full error reports and disable caching.
-  config.consider_all_requests_local       = true
+  # 禁用快取，避免測試結果互相影響
   config.action_controller.perform_caching = false
   config.cache_store = :null_store
 
-  # Raise exceptions instead of rendering exception templates.
-  config.action_dispatch.show_exceptions = false
+  # 不需要靜態檔案伺服器（一般不在測試時用）
+  config.public_file_server.enabled = false
 
-  # Disable request forgery protection in test environment.
-  config.action_controller.allow_forgery_protection = false
-
-  # Store uploaded files on the local file system in a temporary directory.
+  # 測試檔案儲存，通常使用測試專用的本地目錄
   config.active_storage.service = :test
 
+  # 測試郵件不送出，只累積在 ActionMailer::Base.deliveries 陣列中
+  config.action_mailer.delivery_method = :test
   config.action_mailer.perform_caching = false
 
-  # Tell Action Mailer not to deliver emails to the real world.
-  # The :test delivery method accumulates sent emails in the
-  # ActionMailer::Base.deliveries array.
-  config.action_mailer.delivery_method = :test
+  # 明確拋出錯誤，避免測試假過
+  config.action_mailer.raise_delivery_errors = true
 
-  # Print deprecation notices to the stderr.
-  config.active_support.deprecation = :stderr
+  # 只在測試日誌輸出必要資訊，減少噪音
+  config.log_level = :warn
 
-  # Raise exceptions for disallowed deprecations.
-  config.active_support.disallowed_deprecation = :raise
+  # 測試時不產生過時警告
+  config.active_support.report_deprecations = false
 
-  # Tell Active Support which deprecation messages to disallow.
-  config.active_support.disallowed_deprecation_warnings = []
+  # 遷移後不備份 schema，避免測試檔案雜亂
+  config.active_record.dump_schema_after_migration = false
 
-  # Raises error for missing translations.
-  # config.i18n.raise_on_missing_translations = true
+  # 預設以檔案形式記錄日誌（可改成 nil 避免檔案）
+  config.logger = Logger.new(nil)
 
-  # Annotate rendered view with file names.
-  # config.action_view.annotate_rendered_view_with_filenames = true
+  # 測試時背景工作同步執行
+  config.active_job.queue_adapter = :inline
+
+  # 測試環境特定設定，視需求調整
+  # config.i18n.fallbacks = true
 end

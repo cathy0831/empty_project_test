@@ -25,24 +25,26 @@ module EmptyProject
 
     # 時區設定
     config.time_zone = "Taipei"
-    config.active_record.default_timezone = :local
+    config.active_record.default_timezone = :utc
 
-    # 語系檔設定
-    config.i18n.default_locale = "zh-TW"
+    # 語系設定
+    config.i18n.default_locale = :"zh-TW"
     config.i18n.available_locales = [:"zh-TW"]
-    config.i18n.load_path += Dir[Rails.root.join("config/locales/**/*.{rb,yml}")]
+    config.i18n.load_path += Rails.root.glob("config/locales/**/*.{rb,yml}")
 
-    # 自動載入資料匣裡的檔案
-    config.autoload_paths += ["#{config.root}/lib"]
+    # 自動載入 lib 目錄
+    # 忽略不含 .rb 的 lib 子資料夾，避免不必要的 reload
+    config.autoload_lib(ignore: %w[assets tasks])
 
-    # 將 rails generator 預設建立的檔案設為不自動生成
+    # generators 預設不產生樣式、腳本、helper 檔案
     config.generators do |g|
-      g.stylesheets     false
-      g.javascripts     false
-      g.helper          false
+      g.stylesheets false
+      g.javascripts false
+      g.helper false
+      g.system_tests nil
     end
 
-    # audited 允許序列化類別
+    # audited gem 允許 YAML 序列化時的安全類別
     config.active_record.yaml_column_permitted_classes = [BigDecimal, Date, Enumerize::Value]
   end
 end

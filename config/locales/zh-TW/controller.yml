@@ -1,9 +1,29 @@
 zh-TW:
   application:
-    need_login: "重新登入"
-    no_permission: "無權限使用此功能"
+    no_permission: "您沒有此操作的權限"
+    unauthenticated: "請先登入系統"
   session:
     create:
       success: "登入成功"
+      fail: "登入失敗"
     destroy:
       success: "登出成功"
+      fail: "登出失敗"
+    reset_password:
+      success: "密碼變更成功"
+      fail: "密碼變更失敗"
+  setting:
+    users:
+      create:
+        success: "使用者建立成功"
+        fail: "使用者建立失敗"
+      update:
+        success: "使用者更新成功"
+        fail: "使用者更新失敗"
+    permissions:
+      create:
+        success: "權限建立成功"
+        fail: "權限建立失敗"
+      update:
+        success: "權限群組更新成功"
+        fail: "權限群組更新失敗"
