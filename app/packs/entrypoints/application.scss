@@ -1,6 +1,7 @@
-@import '@/src/stylesheets/tailwindcss.css';
-@import '@/src/stylesheets/w3.css';
-@import 'animate.css';
-@import '@/src/stylesheets/fontello.css';
-@import '@/src/stylesheets/style.scss';
-@import '@/src/stylesheets/tablesorter.scss';
+@use '@/src/stylesheets/tailwindcss.css';
+@use 'animate.css';
+@use '@/src/stylesheets/w3.css';
+@use '@/src/stylesheets/fontello.css';
+@use '@/src/stylesheets/tablesorter.scss';
+@use '@/src/stylesheets/style.scss';
+@use '@/src/stylesheets/pagination.scss';

@@ -23,7 +23,7 @@ const customSorterLocale = {
 }
 </script>
 <template>
-  <a-table :columns="tableHeaderList" :data-source="tableDataList" :locale="customSorterLocale">
-  </a-table>
+  <ATable :columns="tableHeaderList" :data-source="tableDataList" :locale="customSorterLocale">
+  </ATable>
 </template>
 <style lang="scss" scoped></style>

@@ -1,5 +1,5 @@
 <script setup>
-import { toRefs } from 'vue'
+import { toRefs, computed } from 'vue'
 
 const props = defineProps({
   label: {
@@ -12,7 +12,7 @@ const props = defineProps({
     type: [String, Number]
   },
   modelValue: {
-    type: [String, Number]
+    type: [String, Number, Array]
   },
   required: {
     type: Boolean
@@ -23,6 +23,13 @@ const props = defineProps({
 })
 
 const { label, name, value, modelValue, required, disabled } = toRefs(props)
+const checkedValue = computed(() => {
+  if (Array.isArray(modelValue.value)) {
+    return new Set(modelValue.value).has(value.value)
+  } else {
+    return modelValue.value === value.value
+  }
+})
 </script>
 <template>
   <label class="flex cursor-pointer items-baseline gap-2">
@@ -30,7 +37,7 @@ const { label, name, value, modelValue, required, disabled } = toRefs(props)
       type="checkbox"
       :name="name"
       :value="value"
-      :checked="modelValue === value"
+      :checked="checkedValue"
       @change="
         $emit('update:modelValue', { checked: $event.target.checked, value: $event.target.value })
       "

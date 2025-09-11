@@ -8,23 +8,17 @@
   <%= vite_stylesheet_tag "application.scss" %>
   <%= vite_javascript_tag "login" %>
 </head>
-<body 
+<body
   class="bg-gray-100 w-full"
-  data-controller="<%= controller.controller_path.to_s %>" 
+  data-controller="<%= controller.controller_path.to_s %>"
   data-action="<%= controller.action_name.to_s %>"
 >
-  <div
-    id="login-app"
-    class="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8"
-    style="height: calc(100vh - 30px);"
-  >
-    <%= render "/notice" %>
-    <login-page
-      :system-name="'<%= t("system_name") %>'"
-      :login-url="'<%= login_path %>'"
-      :redirect-url="'<%= params[:redirect_path] %>'"
-    ></login-page>
-  </div>
+  <%= render "/notice" %>
+  <%= content_tag "div", "", id: "login-app", data: {
+    system_name: t("system_name"),
+    login_url: login_path,
+    redirect_url: params[:redirect_path]
+  } %>
   <%= render "layouts/footer" %>
 </body>
 </html>

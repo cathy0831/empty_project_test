@@ -1,52 +1,48 @@
-@mixin base-page {
-  outline: 1px solid #dddddd;
-  border-radius: 3px;
-  padding: 8px 10px;
-}
+$nav-border: 0.35px solid;
+$nav-border-color: theme('colors.gray.300');
 
-@mixin base-page-hover {
-  border: none;
-  color: white;
-  @apply bg-blue-900;
-}
-
-.pagination {
+.pagy.nav {
   display: flex;
   justify-content: center;
-  gap: 0.5rem;
-  text-align: center;
-  padding: 0.3rem;
-  cursor: default;
-  margin-top: 10px;
-  
-  span.page.active {
-    @include base-page;
-  }
-  span.page.next, span.page {
-    padding: 8px 0;
-    height: 38.5px;
-    a {
-      @include base-page;
-      @apply text-blue-900;
-      padding: 10px 10px;
-      text-decoration: none;
-      &:hover,
-      &:focus {
-        @include base-page-hover;
-      }
+  align-items: center;
+
+  a {
+    display: inline-block;
+    padding: 0.4rem 0.75rem;
+    font-size: 0.9rem;
+    color: theme('colors.gray.700');
+    border-top: $nav-border;
+    border-bottom: $nav-border;
+    border-color: $nav-border-color;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+
+    &:nth-child(odd) {
+      border: $nav-border;
+      border-color: $nav-border-color;
     }
-  }
-  span.page.disabled {
-    @include base-page;
-    color: #aaaaaa;
-  }
-  .active {
-    font-style: normal;
-    font-weight: bold;
-    color: #e28f48;
-  }
-  .page_info {
-    color: #aaaaaa;
-    padding-top: 0.8rem;
+
+    &:last-child {
+      border-right: $nav-border;
+      border-color: $nav-border-color;
+    }
+
+    &:hover {
+      background-color: #f0f0f0;
+    }
+
+    &[aria-disabled='true'] {
+      cursor: auto;
+      color: theme('colors.gray.300');
+    }
+
+    &.current {
+      background-color: white;
+      color: theme('colors.primary');
+      font-weight: 600;
+      border: $nav-border;
+      border-color: theme('colors.primary');
+    }
   }
 }

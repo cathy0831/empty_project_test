@@ -72,18 +72,20 @@ table {
 }
 
 @media (max-width: 1022px) {
-  tbody td[data-title]:before {
-    font-size: 1.1em;
-    font-weight: bold;
-
-    display: inline-block;
-    float: left;
-
-    width: 33%;
-
-    content: attr(data-title);
-    text-align: middle;
-    white-space: pre-line;
+  tbody td[data-title] {
+    &:before {
+      font-size: 1.1em;
+      font-weight: bold;
+      display: inline-block;
+      float: left;
+      width: 33%;
+      content: attr(data-title);
+      text-align: middle;
+      white-space: pre-line;
+    }
+    &.md\:grid::before {
+      width: 100%;
+    }
   }
 
   .tablesorter-colgroup > col {
@@ -92,11 +94,11 @@ table {
 }
 
 .overflow-container {
-  @apply w-full overflow-auto overflow-x-auto overflow-y-auto rounded border p-2;
+  @apply w-full overflow-auto overflow-x-auto overflow-y-auto rounded;
 }
 
 .custom-thead {
-  @apply bg-gray-300 text-gray-800;
+  @apply bg-gray-200 text-gray-800;
 }
 
 /* table */
@@ -116,13 +118,19 @@ select {
 }
 
 .custom-input {
-  @apply focus:outline-none w-full cursor-default rounded-[4px] border border-gray-300 bg-white px-2 py-[0.69rem] text-left shadow-sm transition-colors duration-300 hover:border-[#4096ff];
+  @apply w-full cursor-default rounded-[4px] border border-gray-300 bg-white px-2 py-[0.69rem] text-left shadow-sm transition-colors duration-300 hover:border-[#4096ff] focus:outline-none;
+}
+.custom-validate-input {
+  @apply border border-red-400;
+}
+.custom-validate-message {
+  @apply mb-0 mt-1 text-sm text-red-400;
 }
 /* input */
 
 /* button */
 @mixin base-button {
-  @apply inline-block cursor-pointer overflow-hidden rounded border py-2 px-3;
+  @apply inline-block cursor-pointer overflow-hidden rounded border px-3 py-2;
 }
 .custom-base-button {
   @include base-button;
@@ -136,6 +144,11 @@ select {
 .custom-secondary-button {
   @include base-button;
   @apply whitespace-nowrap border-secondary bg-secondary text-white hover:bg-secondary/90 hover:text-white;
+}
+
+.custom-tertiary-button {
+  @include base-button;
+  @apply whitespace-nowrap border-tertiary bg-tertiary text-white hover:bg-tertiary/90 hover:text-white;
 }
 
 .custom-cancel-button {
@@ -169,7 +182,7 @@ select {
 }
 
 .custom-button-bar {
-  @apply flex w-full justify-end gap-x-2 px-2 pt-10 pb-4;
+  @apply flex w-full justify-end gap-x-2 px-2 pb-4 pt-10;
 }
 /* button */
 
@@ -232,7 +245,7 @@ div:where(.swal2-container) button:where(.swal2-close):hover {
 
 /* session */
 .session-button {
-  @apply m-4 rounded-lg border-2 border-gray-300 bg-gray-200 py-4 px-8 text-center font-bold text-blue-600 hover:bg-gray-300 hover:text-blue-600;
+  @apply m-4 rounded-lg border-2 border-primary bg-white px-8 py-4 text-center font-bold text-primary hover:bg-primary/10 hover:text-primary;
 }
 /* session */
 

@@ -13,6 +13,4 @@
   },
 ]
 %>
-<base-navbar
-  :items="<%= items.to_json %>"
-></base-navbar>
+<%= content_tag "div", "", id: "navbar-app", data: { items: items } %>

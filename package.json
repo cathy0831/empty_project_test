@@ -5,8 +5,7 @@
   },
   "scripts": {
     "lint": "eslint --fix app/packs/src app/packs/entrypoints --format codeframe",
-    "lint:check": "eslint app/packs/src app/packs/entrypoints --format codeframe",
-    "prepare": "husky install"
+    "lint:check": "eslint app/packs/src app/packs/entrypoints --format codeframe"
   },
   "lint-staged": {
     "app/packs/**/*.{js,ts,vue}": [
@@ -17,7 +16,6 @@
     "@hotwired/turbo": "^7.3.0",
     "@rollup/plugin-inject": "^5.0.5",
     "@vitejs/plugin-vue": "^5.2.3",
-    "animate.css": "^4.1.1",
     "ant-design-vue": "4",
     "axios": "^1.8.4",
     "dayjs": "^1.11.10",
@@ -25,13 +23,15 @@
     "jquery": "^3.7.1",
     "sweetalert2": "^11.14.5",
     "tablesorter": "^2.31.3",
-    "vue": "^3.5.18"
+    "vue": "^3.5.18",
+    "yup": "^1.6.1"
   },
   "devDependencies": {
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/forms": "^0.5.7",
     "@tailwindcss/line-clamp": "^0.4.4",
     "@tailwindcss/typography": "^0.5.10",
+    "animate.css": "^4.1.1",
     "autoprefixer": "^10.4.16",
     "eslint": "^9",
     "eslint-config-prettier": "^9.0.0",

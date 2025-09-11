@@ -25,6 +25,11 @@ const pageWatcher = ({ controller, action, handler }) => {
   }
 
   $(document).on('turbo:load turbo:render', handleTurboEvent)
+
+  if (import.meta.env.DEV) {
+    /* 只有在開發模式下需要直接觸發 */
+    handleTurboEvent()
+  }
 }
 
 export default pageWatcher

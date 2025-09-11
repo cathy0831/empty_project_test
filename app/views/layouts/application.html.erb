@@ -7,7 +7,8 @@
     <%= render "/layouts/meta" %>
     <%= vite_client_tag %>
     <%= vite_stylesheet_tag "application.scss" %>
-    <%= vite_javascript_tag "application" %>
+    <% application_js = Rails.env.development? ? "devApplication" : "application" %>
+    <%= vite_javascript_tag application_js %>
   </head>
 
   <body class="h-full w-full" data-controller="<%= controller.controller_path.to_s %>" data-action="<%= controller.action_name.to_s %>">

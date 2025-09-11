@@ -1,5 +1,5 @@
 <script setup>
-import { toRefs } from 'vue'
+import { toRefs, computed } from 'vue'
 
 const props = defineProps({
   label: {
@@ -12,7 +12,7 @@ const props = defineProps({
     type: String
   },
   modelValue: {
-    type: [String, Number]
+    type: [String, Number, Boolean]
   },
   required: {
     type: Boolean
@@ -23,6 +23,9 @@ const props = defineProps({
 })
 
 const { label, name, value, modelValue, required, disabled } = toRefs(props)
+const checkedValue = computed(() => {
+  return modelValue.value?.toString() === value.value?.toString()
+})
 </script>
 <template>
   <label class="flex cursor-pointer items-baseline gap-2">
@@ -30,7 +33,7 @@ const { label, name, value, modelValue, required, disabled } = toRefs(props)
       type="radio"
       :name="name"
       :value="value"
-      :checked="modelValue === value"
+      :checked="checkedValue"
       @change="$emit('update:modelValue', $event.target.value)"
       class="w3-radio"
       :required="required"

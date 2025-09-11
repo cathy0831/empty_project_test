@@ -1,50 +1,30 @@
 <%= render "/notice" %>
-<% if flash[:notice] == "permission qry-error" %>
-  <div class="container"><p class="text-red-800">無查詢權限</p></div>
-<% elsif %>
-<setting-navbar></setting-navbar>
+<%= render "/setting/setting_navbar" %>
 <div class="px-4 container mx-auto md:px-2">
   <div class="py-4 flex justify-between items-center">
     <h3 class="">使用者設定</h3>
     <div class="">
+      <% if edit_perm("user") %>
       <%= link_to "新增使用者", new_setting_user_path, class: "custom-secondary-button" %>
+      <% end %>
     </div>
   </div>
-  <tablesorter-search></tablesorter-search>
-  <table class="w3-table w3-bordered w3-hoverable tablesorter mb-4">
-    <thead class="md:hidden">
-      <tr class="custom-thead">
-        <th class="filter-false sorter-false w-[7rem]"></th>
-        <th class="filter-select sorter-false">狀態</th>    
-        <th>帳號</th>
-        <th>姓名</th>
-        <th>權限</th>
-      </tr>
-    </thead>
-    <tbody class="md:flex md:flex-col">
-      <% @users.each do |user| %>
-      <%= content_tag :tr, "", class: user[:state] == "disable" ? "bg-gray-400 md:grid md:grid-cols-3" : "md:grid md:grid-cols-3" do %>
-      <td class="md:col-span-3">
-        <%= link_to edit_setting_user_path(user[:id]), class: "custom-primary-button" do %>
-          <i class="icon-edit-1"></i>
-          編輯
-        <% end %>
-      </td>
-      <td data-title="狀態" class="md:col-span-3 pl-2">
-        <%= user[:state].text %>
-      </td>
-      <td data-title="帳號" class="md:col-span-3">
-        <%= user[:account] %>
-      </td>
-      <td data-title="姓名" class="md:col-span-3">
-        <%= user[:name] %>
-      </td>
-      <td data-title="權限" class="md:col-span-3">
-        <%= user[:permission][:name] %>
-      </td>
-      <% end %>
-      <% end %>
-    </tbody>
-  </table>
-<% end %>
+  <div class="flex gap-4 md:flex-col">
+    <div class="w-1/6 min-w-[248px] flex-initial md:w-full">
+      <%= content_tag "div", "", id: "index-search-app" %>
+    </div>
+    <div class="flex-1">
+      <div
+        class="overflow-container mb-8 max-h-[calc(100vh_-_300px)] min-h-[calc(100vh_-_300px)] flex-1 md:max-h-full"
+      >
+        <div class="inline-flex w-full flex-col">
+          <%= content_tag "div", "", id: "index-table-app", data: {
+            users: @users,
+            edit_perm: edit_perm("user")
+          } %>
+        </div>
+      </div>
+      <%== pagy_nav(@pagy) if @pagy.last > 1 %>
+    </div>
+  </div>
 </div>

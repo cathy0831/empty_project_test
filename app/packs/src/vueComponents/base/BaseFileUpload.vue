@@ -7,7 +7,10 @@ const props = defineProps({
     type: String
   },
   projectFileList: {
-    type: Array
+    type: Array,
+    default: () => {
+      return []
+    }
   },
   acceptFileType: {
     type: String,

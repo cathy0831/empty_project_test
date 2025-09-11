@@ -1,4 +1,3 @@
-<%= render "/notice" %>
 <% modules = [{
   link: setting_users_path,
   name: "基本設定",
@@ -6,6 +5,5 @@
   perm: true
 }]
 %>
-<index-page
-  :module-list="<%= modules.to_json %>"
-></index-page>
+<%= render "/notice" %>
+<%= content_tag "div", "", id: "index-app", data: { modules: modules } %>

@@ -5,10 +5,6 @@ const props = defineProps({
   label: {
     type: String
   },
-  type: {
-    type: String,
-    default: 'text'
-  },
   name: {
     type: String
   },
@@ -26,12 +22,8 @@ const props = defineProps({
   },
   maxlength: {
     type: Number,
-    default: 100
-  },
-  enterPrevent: {
-    type: Boolean,
     default: () => {
-      return true
+      return 1000
     }
   },
   noMask: {
@@ -42,20 +34,8 @@ const props = defineProps({
   }
 })
 
-const {
-  label,
-  type,
-  name,
-  modelValue,
-  required,
-  customValidate,
-  customValidateText,
-  enterPrevent,
-  noMask
-} = toRefs(props)
-const enterHandler = (event) => {
-  if (enterPrevent.value) event.preventDefault()
-}
+const { label, name, modelValue, required, customValidate, customValidateText, noMask } =
+  toRefs(props)
 </script>
 <template>
   <label>
@@ -64,20 +44,19 @@ const enterHandler = (event) => {
       <span v-if="required && !noMask" class="text-sm font-light text-red-400">*</span>
     </p>
     <div>
-      <input
-        ref="inputRef"
-        :type="type"
+      <textarea
+        ref="textareaRef"
         :name="name"
         :maxlength="maxlength"
         :value="modelValue === 'null' ? null : modelValue"
         @input="$emit('update:modelValue', $event.target.value)"
-        @keydown.enter="enterHandler"
-        :class="['custom-input', { 'custom-validate-input': customValidate }]"
+        class="custom-input"
+        :class="{ 'custom-validate-input': customValidate }"
         :required="required"
         autocomplete="off"
         v-bind="$attrs"
       />
-      <p v-if="customValidate" class="custom-validate-message">
+      <p v-if="customValidate" class="mb-0 mt-3 text-sm text-red-400">
         {{ customValidateText }}
       </p>
     </div>

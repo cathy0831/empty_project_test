@@ -1,11 +1,6 @@
 <script setup>
 import { toRefs, computed } from 'vue'
-/* eslint-disable no-unused-vars */
-import {
-  Select as ASelect,
-  SelectOption as ASelectOption,
-  ConfigProvider as AConfigProvider
-} from 'ant-design-vue'
+import { Select as ASelect, ConfigProvider as AConfigProvider } from 'ant-design-vue'
 import zh_TW from 'ant-design-vue/es/locale/zh_TW'
 
 const props = defineProps({
@@ -44,6 +39,15 @@ const props = defineProps({
   disabled: {
     type: Boolean,
     default: false
+  },
+  placeholder: {
+    type: String
+  },
+  noMask: {
+    type: Boolean,
+    default: () => {
+      return false
+    }
   }
 })
 
@@ -56,11 +60,17 @@ const {
   optionsSelected,
   optionList,
   fieldNames,
-  disabled
+  disabled,
+  placeholder,
+  noMask
 } = toRefs(props)
 
 const filterOption = (input, option) => {
-  return option.label.indexOf(input) >= 0
+  try {
+    return option[fieldNames.value.label].toString().toLowerCase().indexOf(input.toLowerCase()) >= 0
+  } catch (error) {
+    return false
+  }
 }
 
 const selectMode = computed(() => {
@@ -74,12 +84,14 @@ const matchedOption = computed(() => {
   if (Array.isArray(optionsSelected.value)) {
     return optionsSelected.value
   }
-  if (optionsSelected.value === 0) {
-    return optionsSelected.value
-  }
   if (!optionsSelected.value) {
-    return ''
+    if (placeholder.value) {
+      return undefined
+    } else {
+      return optionsSelected.value
+    }
   }
+
   const matchOption = optionList.value.find((option) => {
     return option[fieldNames.value.value] === optionsSelected.value
   })
@@ -89,6 +101,14 @@ const matchedOption = computed(() => {
 
   return optionsSelected.value
 })
+
+const antdConfigTheme = {
+  token: {
+    colorPrimary: '#4096ff',
+    fontSize: '15px',
+    fontFamily: 'Verdana,sans-serif'
+  }
+}
 </script>
 <template>
   <div class="relative">
@@ -98,53 +118,65 @@ const matchedOption = computed(() => {
       :value="matchedOption"
       :required="required"
       class="absolute inset-x-0 bottom-0 m-auto opacity-0"
+      tabindex="-1"
     />
     <label class="z-10">
       <p v-if="label" class="flex items-baseline gap-1 py-1">
         <span>{{ label }}</span>
-        <span v-if="required" class="text-sm font-light text-red-400">*</span>
+        <span v-if="required && !noMask" class="text-sm font-light text-red-400">*</span>
       </p>
       <div class="w-full">
-        <a-config-provider :locale="zh_TW">
-          <a-select
+        <AConfigProvider :locale="zh_TW" :theme="antdConfigTheme">
+          <ASelect
             :value="matchedOption"
             :options="optionList"
-            :show-search="optionList.length >= minimumResultsForSearch"
-            :filter-option="filterOption"
-            :field-names="fieldNames"
+            :showSearch="optionList.length >= minimumResultsForSearch"
+            :filterOption="filterOption"
+            :fieldNames="fieldNames"
             :mode="selectMode"
             :disabled="disabled"
-            show-arrow
-            placeholder="請選擇"
+            showArrow
+            :placeholder="placeholder"
             class="w-full"
             @change="$emit('change', $event)"
             @select="$emit('select', $event)"
             @deselect="$emit('deselect', $event)"
-          >
-          </a-select>
-        </a-config-provider>
+          />
+        </AConfigProvider>
       </div>
     </label>
   </div>
 </template>
 <style lang="scss" scoped>
-:deep .ant-select .ant-select-selector {
-  min-height: 3rem;
-  padding: 0 1rem;
-  border-radius: 4px;
-  font-size: 1rem;
-  line-height: 1.5;
+:deep(.ant-select) {
+  .ant-select-selector {
+    min-height: 3rem;
+    padding: 0 0.5rem;
+    border-radius: 4px;
+    line-height: 1.5;
 
-  .ant-select-selection-search-input {
-    height: 100%;
+    .ant-select-selection-search {
+      inset-inline-start: 0.5rem;
+    }
+    .ant-select-selection-search-input {
+      height: 100%;
+    }
+    .ant-select-selection-item,
+    .ant-select-selection-placeholder {
+      display: flex;
+      align-items: center;
+    }
+    .ant-select-selection-placeholder {
+      color: #0000007a;
+    }
   }
-  .ant-select-selection-item,
-  .ant-select-selection-placeholder {
-    display: flex;
-    align-items: center;
+  .ant-select-arrow {
+    margin-top: -0.5rem;
   }
-  .ant-select-selection-item-remove {
-    vertical-align: middle;
-  }
+}
+</style>
+<style lang="scss">
+.ant-select-item-option {
+  padding: 5px 7px;
 }
 </style>

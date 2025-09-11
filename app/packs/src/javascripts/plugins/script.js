@@ -10,18 +10,11 @@ function validIP (data) {
   const status = reg.test(data)
   return status
 }
+
 /**
- * valiad  email
+ * valid  car index
  */
-function valiadEmail (data) {
-  const reg = /^\w+((-\w+)|(\.\w+))*@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/
-  const status = reg.test(data)
-  return status
-}
-/**
- * valiad  car index
- */
-function valiadCarIndex (data) {
+function validCarIndex (data) {
   const reg = /^[A-Z0-9]{2,3}-[0-9]{3,4}$|^[0-9]{3,4}-[A-Z0-9]{2,3}$/
   const status = reg.test(data)
   return status
@@ -55,4 +48,4 @@ function numberWithCommas (num) {
   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 }
 
-export { hashFnv32a, validPhone, validIP, valiadEmail, valiadCarIndex, indexPad, numberWithCommas }
+export { hashFnv32a, validPhone, validIP, validCarIndex, indexPad, numberWithCommas }

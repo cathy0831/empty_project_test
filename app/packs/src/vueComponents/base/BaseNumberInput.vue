@@ -1,6 +1,6 @@
 <script setup>
 import { toRefs } from 'vue'
-import { InputNumber as AInputNumber } from 'ant-design-vue'
+import { InputNumber as AInputNumber, ConfigProvider as AConfigProvider } from 'ant-design-vue'
 
 const props = defineProps({
   label: {
@@ -50,47 +50,56 @@ function formattedValue (value) {
     }
   }
 }
+
+const antdConfigTheme = {
+  token: {
+    colorPrimary: '#4096ff',
+    fontSize: '15px',
+    fontFamily: 'Verdana,sans-serif'
+  }
+}
 </script>
 <template>
-  <label>
+  <label :for="name">
     <p v-if="label" class="flex items-baseline gap-1 py-1">
       <span>{{ label }}</span>
       <span v-if="required" class="text-sm font-light text-red-400">*</span>
     </p>
     <div class="relative">
       <!-- 給原生 form 表單 formData 使用的 input 欄位 -->
-      <input class="hidden" :name="name" :value="modelValue" :required="required" />
-      <a-input-number
+      <input
+        class="absolute inset-x-0 bottom-0 m-auto opacity-0"
+        :name="name"
         :value="modelValue"
-        @change="$emit('update:modelValue', $event)"
-        :formatter="formattedValue"
-        class="custom-input"
-        :class="{ 'border-2 border-red-400': customValidate }"
         :required="required"
-        autocomplete="off"
-        v-bind="$attrs"
+        tabindex="-1"
       />
+      <AConfigProvider :theme="antdConfigTheme">
+        <AInputNumber
+          :value="modelValue"
+          :name="name"
+          :id="name"
+          @change="$emit('update:modelValue', $event)"
+          :formatter="formattedValue"
+          :class="['custom-input', { 'custom-validate-input': customValidate }]"
+          :required="required"
+          :autocomplete="'off'"
+          inputmode="numeric"
+          v-bind="$attrs"
+        />
+      </AConfigProvider>
       <span v-if="unit" class="absolute inset-y-0 right-10 m-auto h-fit text-gray-400">
         {{ unit }}
       </span>
+      <p v-if="customValidate" class="custom-validate-message">
+        {{ customValidateText }}
+      </p>
     </div>
-    <p v-if="customValidate" class="mb-0 mt-2 text-sm text-red-400">
-      {{ customValidateText }}
-    </p>
   </label>
 </template>
 <style lang="scss" scoped>
 :deep(.ant-input-number-input) {
-  font-size: 15px;
-  font-family: Verdana, sans-serif; //same with w3.css
-  color: #000;
   height: auto;
   padding: 0;
-}
-:deep(.ant-input-number-handler) {
-  height: 50% !important;
-  &:hover {
-    height: 50% !important;
-  }
 }
 </style>

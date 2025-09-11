@@ -16,7 +16,7 @@ const props = defineProps({
   },
   activeClass: {
     type: String,
-    default: 'p-4 border-b-[3px] border-tertiary text-system-text-system-gray-5'
+    default: 'p-4 border-b-[3px] border-tertiary text-system-gray-5'
   },
   inactiveClass: {
     type: String,
@@ -37,14 +37,16 @@ const itemClass = (item) => {
 <template>
   <div class="custom-scrollbar overflow-x-auto overflow-y-hidden shadow-md">
     <div class="flex">
-      <a
-        v-for="item in items"
-        :key="item.name"
-        :href="item.url"
-        :class="['relative block whitespace-nowrap font-bold', itemClass(item)]"
-      >
-        {{ item.name }}
-      </a>
+      <template v-for="item in items">
+        <a
+          v-if="item.perm"
+          :key="item.name"
+          :href="item.url"
+          :class="['relative block whitespace-nowrap font-bold', itemClass(item)]"
+        >
+          {{ item.name }}
+        </a>
+      </template>
     </div>
   </div>
 </template>

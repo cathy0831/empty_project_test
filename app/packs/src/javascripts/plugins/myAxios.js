@@ -19,11 +19,16 @@ instance.interceptors.response.use(
           mySwal.error({ title: '錯誤', text: error.response.data?.message || '錯誤號碼: 400' })
           break
         case 401:
+          mySwal.error({
+            title: error.response.data?.message || '認證失敗',
+            text: '錯誤號碼: 401'
+          })
+          break
         case 403:
           mySwal
             .error({
               title: '權限錯誤',
-              text: `錯誤號碼: ${error.response.status}`,
+              text: '錯誤號碼: 403',
               timer: 3000
             })
             .then(() => {

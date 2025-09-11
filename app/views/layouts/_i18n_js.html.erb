@@ -2,8 +2,3 @@
   data-locale="<%= I18n.locale %>"
   data-translations="<%= I18n::JS.filtered_translations.to_json %>"
 ></div>
-
-<script>
-window.i18n_locale = "<%= I18n.locale %>"
-window.i18n_translations = <%== I18n::JS.filtered_translations.to_json %>
-</script>

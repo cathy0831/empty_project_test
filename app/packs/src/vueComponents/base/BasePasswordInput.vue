@@ -1,7 +1,7 @@
 <script setup>
 import { toRefs } from 'vue'
 
-import { InputPassword as AInputPassword } from 'ant-design-vue'
+import { InputPassword as AInputPassword, ConfigProvider as AConfigProvider } from 'ant-design-vue'
 
 const props = defineProps({
   label: {
@@ -19,7 +19,7 @@ const props = defineProps({
   customValidate: {
     type: Boolean
   },
-  validateText: {
+  customValidateText: {
     type: String
   },
   maxlength: {
@@ -44,35 +44,60 @@ const props = defineProps({
   }
 })
 
-const { label, name, modelValue, required, customValidate, validateText, enterPrevent, noMask } =
-  toRefs(props)
+const {
+  label,
+  name,
+  modelValue,
+  required,
+  customValidate,
+  customValidateText,
+  enterPrevent,
+  autocomplete,
+  noMask
+} = toRefs(props)
 const enterHandler = (event) => {
   if (enterPrevent.value) event.preventDefault()
 }
+
+const antdConfigTheme = {
+  token: {
+    colorPrimary: '#4096ff',
+    fontSize: '15px',
+    fontFamily: 'Verdana,sans-serif'
+  }
+}
 </script>
 <template>
-  <label>
+  <label :for="name">
     <p v-if="label" class="flex items-baseline gap-1 py-1">
       <span>{{ label }}</span>
       <span v-if="required && !noMask" class="text-sm font-light text-red-400">*</span>
     </p>
-    <div>
-      <input class="hidden" :name="name" :value="modelValue" :required="required" />
-      <a-input-password
-        ref="passwordInputRef"
-        v-bind="$attrs"
+    <div class="relative">
+      <input
+        class="absolute bottom-0 right-1/2 opacity-0"
         :name="name"
-        :maxlength="maxlength"
-        :value="modelValue === 'null' ? null : modelValue"
-        @input="$emit('update:modelValue', $event.target.value)"
-        @keydown.enter="enterHandler"
-        class="custom-input"
-        :class="{ 'border-2 border-red-400': customValidate }"
+        :value="modelValue"
         :required="required"
-        :autocomplete="autocomplete"
+        tabindex="-1"
       />
-      <p v-if="customValidate" class="mb-0 mt-2 text-sm text-red-400">
-        {{ validateText }}
+      <AConfigProvider :theme="antdConfigTheme">
+        <aInputPassword
+          ref="passwordInputRef"
+          v-bind="$attrs"
+          :name="name"
+          :id="name"
+          :maxlength="maxlength"
+          :value="modelValue === 'null' ? null : modelValue"
+          @input="$emit('update:modelValue', $event.target.value)"
+          @keydown.enter="enterHandler"
+          :class="['custom-input', { 'custom-validate-input': customValidate }]"
+          :required="required"
+          :autocomplete="autocomplete"
+        />
+      </AConfigProvider>
+      <p v-if="customValidate" class="custom-validate-message">
+        {{ customValidateText }}
       </p>
     </div>
   </label>

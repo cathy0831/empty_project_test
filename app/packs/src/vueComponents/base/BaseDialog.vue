@@ -12,7 +12,7 @@ const props = defineProps({
 const { dialogHelper } = toRefs(props)
 </script>
 <template>
-  <a-modal
+  <AModal
     :open="dialogHelper.isDialogOpen"
     :title="dialogHelper.dialogTitle"
     :maskClosable="true"
@@ -21,6 +21,6 @@ const { dialogHelper } = toRefs(props)
     @cancel="$emit('closeDialog')"
   >
     <slot></slot>
-  </a-modal>
+  </AModal>
 </template>
 <style lang="scss" scoped></style>
