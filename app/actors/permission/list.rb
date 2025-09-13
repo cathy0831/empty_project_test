@@ -1,9 +1,11 @@
 class Permission::List < Actor
-  output :permissions
-  output :setting_permissions
+  input :type, default: -> { "general" }
 
-  play  :grep_permissions,
-        :grep_setting_permissions
+  output :permissions
+
+  play :grep_permissions, if: ->(actor) { actor.type.eql? "general" }
+
+  play :grep_setting_permissions, if: ->(actor) { actor.type.eql? "setting" }
 
   def grep_permissions
     permissions = Permission.where(state: %w[enable default])
@@ -12,6 +14,6 @@ class Permission::List < Actor
 
   def grep_setting_permissions
     permissions = Permission.where(state: %w[enable disable default])
-    self.setting_permissions = permissions.order(state: :desc)
+    self.permissions = permissions.order(state: :desc)
   end
 end

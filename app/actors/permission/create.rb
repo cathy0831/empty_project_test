@@ -4,12 +4,11 @@ class Permission::Create < Actor
   output :permission
 
   def call
-    permission = Permission.new(permission_params)
-    if permission.save
-      self.permission = permission
-    else
-      fail!(error: permission.errors.full_messages.join(", "))
-    end
+    self.permission = Permission.new(permission_params)
+
+    return if permission.save
+
+    fail!(error: permission.formatted_errors)
   end
 
   private
@@ -17,9 +16,18 @@ class Permission::Create < Actor
   def permission_params
     {
       name: params[:name],
-      content: JSON.parse(params[:content]),
-      note: params[:note],
+      content: parse_content(params[:content]),
       state: params[:state],
     }
+  end
+
+  def parse_content(raw_content)
+    if raw_content.nil? || raw_content.strip.empty?
+      fail!(error: "權限內容不可為空")
+    end
+
+    JSON.parse(raw_content)
+  rescue JSON::ParserError => e
+    fail!(error: "錯誤JSON格式: #{e.message}")
   end
 end

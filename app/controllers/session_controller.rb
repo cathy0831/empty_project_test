@@ -21,7 +21,7 @@ class SessionController < ApplicationController
       sign_in(actor.user)
       render json: { status: 0, message: t(".success") }
     else
-      render json: { status: -1, message: t(".fail"), error: actor.error }, status: :unauthorized
+      render json: { status: -1, message: t(".fail"), error: actor.error }
     end
   end
 
@@ -35,6 +35,7 @@ class SessionController < ApplicationController
   def reset_password
     actor = Session::ResetPassword.result(password_params)
     if actor.success?
+      sign_out
       render json: { status: 0, message: t(".success") }
     else
       Error_Logger.error "[#{controller_name}##{action_name}] #{actor.error}"

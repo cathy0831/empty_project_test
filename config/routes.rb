@@ -6,7 +6,14 @@ Rails.application.routes.draw do
   post "reset_password", to: "session#reset_password"
 
   namespace :setting do
-    resources :users
-    resources :permissions
+    # 使用者
+    resources :users, except: [:show, :destroy]
+
+    # 權限
+    resources :permissions, except: [:show, :destroy]
+
+    # 匯入
+    get "import", to: "import#index"
+    post "import", to: "import#import"
   end
 end

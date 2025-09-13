@@ -4,7 +4,10 @@ class Permission::Find < Actor
   output :permission
 
   def call
-    permission = Permission.find_by(id: permission_id)
-    self.permission = permission
+    self.permission = Permission.find_by(id: permission_id)
+
+    return if permission.present?
+
+    fail!(error: I18n.t("actor.permission.not_found", id: permission_id))
   end
 end

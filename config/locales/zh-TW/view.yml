@@ -8,9 +8,9 @@ zh-TW:
     search: "查詢"
     edit: "編輯"
   validate_error:
-    "only_alphanumeric": "只能輸入數字和英文字元"
-    "min_length_text": "至少輸入 %{num} 個字元"
-    "min_length_number": "至少輸入 %{num} 個數字"
-    "must_be_digits": "必須為 %{num} 個數字"
-    "invalid_email": "請符合 email 格式，如: 123@mail.com"
-    "decimal_limit": 最多只能輸入小數點後 %{num} 位
+    only_alphanumeric: "只能輸入數字和英文字元"
+    min_length_text: "至少輸入 %{num} 個字元"
+    min_length_number: "至少輸入 %{num} 個數字"
+    must_be_digits: "必須為 %{num} 個數字"
+    invalid_email: "請符合 email 格式，如: 123@mail.com"
+    decimal_limit: "最多只能輸入小數點後 %{num} 位"

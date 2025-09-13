@@ -78,7 +78,6 @@
   ##### 環境參數
   ```
   # credentials/development.key
-  TODO
   daee001b904abd6bb84c21a07ad5b252
   ```
   ##### 常用指令
@@ -89,6 +88,18 @@
   * 程式碼掃描檢查: `$ rails dev_func:code_analysis`
   * 編輯開發環境參數: `$ rails credentials:edit --environment development`
   
+</details>
+<details>
+  <summary>自動化測試說明</summary>
+  
+  ##### 環境參數
+  ```
+  # credentials/test.key
+  09d9ffcd1f2ae46a9b1427fff76e8fc4
+  ```
+
+  ##### 常用指令
+  * 程式碼自動化測試: `$ rails dev_func:test_app`
 </details>
 <details>
   <summary>測試說明</summary>

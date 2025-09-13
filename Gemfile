@@ -6,6 +6,7 @@ ruby "3.3.2"
 gem "rails", "~> 7.1.5"
 
 # 基礎
+gem "activerecord-session_store"
 gem "audited"
 gem "bcrypt", "~> 3.1"
 gem "blueprinter"
@@ -34,7 +35,7 @@ group :development, :test do
   gem "bullet"
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
   gem "factory_bot_rails"
-  gem "faker"
+  gem "ffaker"
   gem "pry-rails"
   gem "rails-controller-testing"
   gem "rspec-rails", "~> 6.0"

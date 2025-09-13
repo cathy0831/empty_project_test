@@ -25,6 +25,6 @@ class Session::ResetPassword < Actor
     user.password = new_password
     return if user.save
 
-    fail!(error: user.errors.full_messages.join(", "))
+    fail!(error: user.formatted_errors)
   end
 end

@@ -1,13 +1,13 @@
 class ApplicationController < ActionController::Base
   include Pagy::Backend
 
-  protect_from_forgery with: :reset_session
+  protect_from_forgery
   helper_method :current_user
 
   before_action :set_current_user
   before_action :authenticate_user!
 
-  # 驗證使用者
+  # 驗證使用者是否登入
   def authenticate_user!
     return if current_user.present? && current_user.active?
 
@@ -18,35 +18,38 @@ class ApplicationController < ActionController::Base
     )
   end
 
-  # 檢查權限
+  # 權限檢查
   def permission_check(func, subfunc)
-    return if current_user.permission.allowed?(func, subfunc)
+    return if current_user&.permission&.allowed?(func, subfunc)
 
     handle_unauthorized_access
   end
 
-  # 使用者登入
+  # 目前登入的 user（memoization）
+  def current_user
+    return @current_user if defined?(@current_user)
+
+    @current_user = User.find_by(id: session[:user_id])
+  end
+
+  # 使用者登入（單裝置）
   def sign_in(user)
+    # 刪掉同一個使用者的所有 session（單裝置登入）
+    ActiveRecord::SessionStore::Session.find_each do |s|
+      s.destroy if s.data.is_a?(Hash) && s.data["user_id"] == user.id
+    end
+
+    # 寫入新的 session
     session[:user_id] = user.id
   end
 
   # 使用者登出
   def sign_out
-    session.delete(:user_id)
-    @current_user = nil
     Current.user = nil
+    reset_session
   end
 
-  # 目前登入的 user
-  def current_user
-    if instance_variable_defined?(:@current_user)
-      @current_user
-    else
-      @current_user = User.find_by(id: session[:user_id])
-    end
-  end
-
-  # 回傳JSON格式
+  # JSON 統一回傳格式
   def render_json(actor, data: nil)
     if actor.success?
       render json: { status: 0, message: t(".success"), data: data }
@@ -78,7 +81,7 @@ class ApplicationController < ActionController::Base
 
   private
 
-  # 設定當前使用者
+  # 設定全域 Current.user
   def set_current_user
     Current.user = current_user
   end

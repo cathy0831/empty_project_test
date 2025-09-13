@@ -1,14 +1,27 @@
 zh-TW:
+  errors:
+    messages:
+      required: "必填"
+      blank: "不能為空"
+      taken: "重複"
+      invalid: "無效的 %{attribute}"
+      greater_than: "%{attribute} 需大於 %{count}"
+      record_invalid: "找不到紀錄"
+      inclusion: "狀態不在允許範圍內"
   activerecord:
     models:
       user: "使用者"
+      permission: "權限"
     attributes:
-      user:
-        account: "帳號"
-        name: "姓名"
-        email: "電子郵件"
-        password: "密碼"
       permission:
         name: "名稱"
-  
+        content: "內容"
+        state: "狀態"
+      user:
+        name: "姓名"
+        account: "帳號"
+        password: "密碼"
+        email: "電子郵件"
+        permission: "權限"
+        state: "狀態"
   

@@ -17,4 +17,4 @@ PERMISSION_ITEMS = [
   { module: "user", actions: %w[search edit] },
 ].freeze
 
-SETTING_MODULES = %w[permission user].freeze
+SETTING_MODULES = %w[user permission].freeze

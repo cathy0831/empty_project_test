@@ -59,6 +59,12 @@ GEM
       activemodel (= 7.1.5.1)
       activesupport (= 7.1.5.1)
       timeout (>= 0.4.0)
+    activerecord-session_store (2.2.0)
+      actionpack (>= 7.0)
+      activerecord (>= 7.0)
+      cgi (>= 0.3.6)
+      rack (>= 2.0.8, < 4)
+      railties (>= 7.0)
     activestorage (7.1.5.1)
       actionpack (= 7.1.5.1)
       activejob (= 7.1.5.1)
@@ -113,6 +119,7 @@ GEM
       activesupport (>= 3.0.0)
       uniform_notifier (~> 1.11)
     byebug (12.0.0)
+    cgi (0.5.0)
     chronic (0.10.2)
     code_analyzer (0.5.5)
       sexp_processor
@@ -167,8 +174,7 @@ GEM
     factory_bot_rails (6.5.0)
       factory_bot (~> 6.5)
       railties (>= 6.1.0)
-    faker (3.5.2)
-      i18n (>= 1.8.11, < 2)
+    ffaker (2.25.0)
     ffi (1.17.2)
     ffi (1.17.2-aarch64-linux-gnu)
     ffi (1.17.2-aarch64-linux-musl)
@@ -466,6 +472,7 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
+  activerecord-session_store
   annotate
   audited
   bcrypt (~> 3.1)
@@ -479,7 +486,7 @@ DEPENDENCIES
   enumerize
   exception_notification
   factory_bot_rails
-  faker
+  ffaker
   foreman
   i18n-js (~> 3.9)
   jbuilder (~> 2.11)

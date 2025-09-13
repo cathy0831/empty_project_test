@@ -1,7 +1,7 @@
 class User < ApplicationRecord
-  enumerize :state, in: ModelEnum.user_state_enum
-
   belongs_to :permission
+
+  enumerize :state, in: ModelEnum.user_state_enum
 
   validates :account, presence: true,
                       uniqueness: { case_sensitive: false }

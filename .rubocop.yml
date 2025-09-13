@@ -8,7 +8,6 @@ AllCops:
   NewCops: enable
   Exclude:
     - 'vendor/**/*'
-    - 'db/migrate/*'
     - 'db/schema.rb'
     - 'bin/**/*'
     - 'log/**/*'
@@ -17,6 +16,13 @@ AllCops:
     - 'spec/factories/**/*'
 
 # Metrics Cops  
+Metrics/AbcSize:
+  Description: 'Avoid methods with high complexity measured by ABC size.'
+  Max: 17 
+  Enabled: true
+  Exclude:
+    - 'db/migrate/*'
+
 Metrics/ClassLength:
   Description: 'Avoid classes longer than 100 lines of code.'
   Max: 100
@@ -39,10 +45,14 @@ Metrics/MethodLength:
   Max: 15
   Enabled: true
   CountAsOne: ['hash','array']
+  Exclude:
+    - 'db/migrate/*'
 
 Metrics/BlockLength:
   CountComments: false
   Max: 10
+  Exclude:
+    - 'db/migrate/*'
   AllowedMethods:
     - context
     - describe

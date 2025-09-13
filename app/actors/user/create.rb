@@ -4,9 +4,11 @@ class User::Create < Actor
   output :user
 
   def call
-    user = User.new(user_params)
-    user.save!
-    self.user = user
+    self.user = User.new(user_params)
+
+    return if user.save
+
+    fail!(error: user.formatted_errors)
   end
 
   private

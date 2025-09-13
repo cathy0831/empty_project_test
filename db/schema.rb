@@ -53,7 +53,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_02_000001) do
     t.string "comment"
     t.string "remote_address"
     t.string "request_uuid"
-    t.datetime "created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["associated_type", "associated_id"], name: "associated_index"
     t.index ["auditable_type", "auditable_id", "version"], name: "auditable_index"
     t.index ["created_at"], name: "index_audits_on_created_at"
@@ -71,12 +72,22 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_02_000001) do
     t.index ["name"], name: "index_permissions_on_name", unique: true
   end
 
+  create_table "sessions", charset: "utf8mb4", force: :cascade do |t|
+    t.string "session_id", null: false
+    t.text "data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["session_id"], name: "index_sessions_on_session_id", unique: true
+    t.index ["updated_at"], name: "index_sessions_on_updated_at"
+  end
+
   create_table "users", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "permission_id"
+    t.string "name"
     t.string "account"
     t.string "password_digest"
-    t.string "name"
     t.text "note"
+    t.string "session_token"
     t.integer "state", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

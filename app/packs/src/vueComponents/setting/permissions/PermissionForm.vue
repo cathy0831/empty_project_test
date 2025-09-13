@@ -6,7 +6,7 @@ import formLeaveConfirm from '@/src/javascripts/plugins/formLeaveConfirm.js'
 import BaseTextInput from '@/src/vueComponents/base/BaseTextInput.vue'
 import BaseCheckbox from '@/src/vueComponents/base/BaseCheckbox.vue'
 import StateRadio from '@/src/vueComponents/base/StateRadio.vue'
-import { isNewAction } from '@/src/javascripts/helpers/formHelper.js'
+import { isNewAction, handleLogout } from '@/src/javascripts/helpers/formHelper.js'
 import { visit } from '@hotwired/turbo'
 
 const props = defineProps({
@@ -108,7 +108,11 @@ const onSubmitForm = async (event) => {
     })
 
     if (response.status === 0) {
-      visit(baseUrl)
+      if (response.data?.require_logout) {
+        handleLogout()
+      } else {
+        visit(baseUrl)
+      }
     } else if (response.status === 1) {
       visit('/setting')
     } else if (response.status === 2) {

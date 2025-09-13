@@ -5,49 +5,58 @@ class Setting::PermissionsController < ApplicationController
   def index
     actor = Permission::List.result(search_params)
     if actor.success?
-      Rails.logger.debug actor
-      @pagy, permissions = pagy_array(actor.setting_permissions)
-      @permissions = PermissionBlueprint.render_as_hash(permissions, view: :list)
+      @pagy, permissions = pagy_array(actor.permissions)
+      @permissions = permission_blueprint(permissions, view: :list)
     else
       @permissions = []
     end
   end
 
   def new
-    @permission = Permission.new
+    @permission = Permission.new(state: "enable")
   end
 
   def edit
     actor = Permission::Find.result(permission_id: params[:id])
-    if actor.success? && actor.permission.present?
-      @permission = PermissionBlueprint.render_as_hash(actor.permission, view: :show)
+    if actor.success?
+      @permission = permission_blueprint(actor.permission, view: :form)
     else
       head :not_found
     end
   end
 
   def create
-    actor = Permission::Create.result(params: form_params)
+    actor = Permission::Create.result(form_params)
     render_json(actor)
   end
 
   def update
-    actor = Permission::Update.result(permission_id: params[:id], params: form_params)
-    render_json(actor)
+    actor = Permission::Update.result(form_params)
+    render_json(actor, data: { require_logout: require_logout?(actor) })
   end
 
   private
 
+  def require_logout?(actor)
+    actor.success? &&
+      actor.users.include?(current_user)
+  end
+
+  def permission_blueprint(permissions, view: nil)
+    PermissionBlueprint.render_as_hash(permissions, view:)
+  end
+
   def search_params
-    {}
+    { type: "setting" }
   end
 
   def form_params
-    params.permit(
-      :name,
-      :content,
-      :note,
-      :state,
-    )
+    {
+      permission_id: params[:id],
+      params: params.permit(:name,
+                            :content,
+                            :note,
+                            :state),
+    }
   end
 end

@@ -7,7 +7,7 @@ class PermissionBlueprint < Blueprinter::Base
     fields :content, :state
   end
 
-  view :show do
+  view :form do
     include_view :list
   end
 end

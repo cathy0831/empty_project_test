@@ -7,8 +7,8 @@ class CreatePermissions < ActiveRecord::Migration[7.1]
       t.integer :state, default: 0
 
       t.timestamps
-
-      t.index :name, unique: true
     end
+
+    add_index :permissions, :name, unique: true
   end
 end

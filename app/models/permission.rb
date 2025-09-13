@@ -1,8 +1,12 @@
 class Permission < ApplicationRecord
   serialize :content, coder: JSON
-  enumerize :state, in: ModelEnum.data_state_enum
 
-  validates :name, presence: true, uniqueness: { case_sensitive: false }
+  has_many :users, dependent: :restrict_with_error
+
+  enumerize :state, in: ModelEnum.permission_state_enum
+
+  validates :name, presence: true,
+                   uniqueness: { case_sensitive: false }
 
   def allowed?(module_key, action_key = "search")
     return false if content.nil? || state == "disable"

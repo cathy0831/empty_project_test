@@ -4,7 +4,10 @@ class User::Find < Actor
   output :user
 
   def call
-    user = User.find_by(id: user_id)
-    self.user = user
+    self.user = User.find_by(id: user_id)
+
+    return if user.present?
+
+    fail!(error: I18n.t("actor.user.not_found", id: user_id))
   end
 end

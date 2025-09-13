@@ -4,7 +4,7 @@ import myAxios from '@/src/javascripts/plugins/myAxios.js'
 import mySwal from '@/src/javascripts/plugins/mySwal.js'
 import { hashFnv32a } from '@/src/javascripts/plugins/script.js'
 import formLeaveConfirm from '@/src/javascripts/plugins/formLeaveConfirm.js'
-import { isNewAction } from '@/src/javascripts/helpers/formHelper.js'
+import { isNewAction, handleLogout } from '@/src/javascripts/helpers/formHelper.js'
 import {
   yupFieldNameValidate,
   reportCustomValidity
@@ -99,7 +99,12 @@ const onSubmitForm = (event) => {
       })
       return false
     }
-    visit(baseUrl)
+
+    if (response.data?.require_logout) {
+      handleLogout()
+    } else {
+      visit(baseUrl)
+    }
   })
 }
 </script>
