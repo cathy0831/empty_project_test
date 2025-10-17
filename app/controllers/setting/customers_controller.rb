@@ -1,7 +1,7 @@
 class Setting::CustomersController < ApplicationController
   before_action -> { permission_check("customer", "search") }, only: [:index]
   before_action -> { permission_check("customer", "edit") }, except: [:index]
-  before_action :raleted_data, only: [:index, :new, :edit]
+  before_action :related_data, only: [:index, :new, :edit]
 
   def index
     actor = Customer::List.result(search_params)
@@ -14,7 +14,7 @@ class Setting::CustomersController < ApplicationController
   end
 
   def new
-    @customer = Customer.new(state: "enable")
+    @customer = Customer.new(state: 100)
   end
 
   def edit
@@ -32,13 +32,13 @@ class Setting::CustomersController < ApplicationController
   end
 
   def update
-    actor = Customer::Update.result(form_params)
+    actor = Customer::Update.result(customer_id: params[:id], params: form_params[:params])
     render_json(actor)
   end
 
   private
 
-  def raleted_data
+  def related_data
     permissions = Permission::List.call.permissions
     @permissions = PermissionBlueprint.render_as_hash(permissions)
   end
