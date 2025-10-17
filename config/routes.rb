@@ -9,6 +9,9 @@ Rails.application.routes.draw do
     # 使用者
     resources :users, except: [:show, :destroy]
 
+    # 客戶
+    resources :customers, except: [:show, :destroy]
+
     # 權限
     resources :permissions, except: [:show, :destroy]
 
